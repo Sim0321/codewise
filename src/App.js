@@ -1,7 +1,13 @@
+import AdminPage from "./pages/AdminPage";
 import { GlobalStyle } from "./styles/GlobalStyle";
 
 function App() {
-  return <GlobalStyle></GlobalStyle>;
+  return (
+    <>
+      <GlobalStyle />
+      <AdminPage />
+    </>
+  );
 }
 
 export default App;

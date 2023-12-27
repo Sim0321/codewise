@@ -2,12 +2,13 @@ import { css } from "styled-components";
 
 export const theme = {
   color: {
-    white: "#e5e7ee",
-    black: "#353535",
-    blue: "#7092c6",
+    white: "#ffffff",
+    black: "#191919",
+    blue: "#5E8EC7",
   },
   border: {
     gray: "#CCD0E7",
+    black: "#191919",
   },
   font: {
     title: css`
@@ -21,11 +22,14 @@ export const theme = {
     `,
   },
   backGround: {
-    default: "#ffffff",
+    default: "#CDD0E5",
+    white: "#ffffff",
     mail: "#acb4b9",
-    columHover: "#fffbd8",
+    columHover: "#e9eef4",
+    columChecked: "#fffbd8",
     checked: "#ef3d66",
     total: "#ddebff",
     top: "#2e3e76",
+    bottom: "#D9DAE3",
   },
 };
