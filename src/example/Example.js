@@ -1,67 +1,67 @@
-import React, {useEffect, useState} from 'react';
-import MockApi from "../utils/mockApi"
+import React, { useEffect, useState } from "react";
+import MockApi from "../utils/mockApi";
+import EmailForm from "../EmailForm";
 const mockApi = new MockApi();
 
 const Example = () => {
+  const [jsonData, setJsonData] = useState([]);
 
-    const [jsonData, setJsonData] = useState([]);
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-    useEffect(() => {
-        fetchData();
-    }, []);
+  const fetchData = async () => {
+    try {
+      const response = await mockApi.get();
+      setJsonData(response.data.articles);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
-    const fetchData = async () => {
-        try {
-            const response = await mockApi.get();
-            setJsonData(response.data.articles);
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-    };
+  const handleDeleteData = async () => {
+    try {
+      const response = await mockApi.delete({ mailUidList: 1 });
+      setJsonData(response.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
-    const handleDeleteData = async () => {
-        try {
-            const response = await mockApi.delete({mailUidList:1});
-            setJsonData(response.data);
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-    };
+  const handleAddData = async () => {
+    try {
+      const response = await mockApi.post({
+        mailType: "New Type",
+        mailTitle: "New Title",
+        ismailIUse: "Yes",
+        mailContent: "New Content",
+        reason: "New Reason",
+      });
+      setJsonData(response.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
-    const handleAddData = async () => {
-        try {
-            const response = await mockApi.post({
-                mailType: 'New Type',
-                mailTitle: 'New Title',
-                ismailIUse: 'Yes',
-                mailContent: 'New Content',
-                reason: 'New Reason',
-            });
-            setJsonData(response.data);
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-    };
+  const handleUpdateData = async () => {
+    try {
+      const response = await mockApi.put({
+        mailUid: 1,
+        mailType: "Updated Type",
+        mailTitle: "Updated Title",
+        ismailIUse: "Yes",
+        mailContent: "Updated Content",
+        reason: "Updated Reason",
+      });
+      setJsonData(response.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
-    const handleUpdateData = async () => {
-        try {
-            const response = await mockApi.put({
-                mailUid: 1,
-                mailType: 'Updated Type',
-                mailTitle: 'Updated Title',
-                ismailIUse: 'Yes',
-                mailContent: 'Updated Content',
-                reason: 'Updated Reason',
-            });
-            setJsonData(response.data);
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-    };
-
-    return (
-        <div>
-            <section>
+  return (
+    <div>
+      {/* <section>
                 <h2>GetExample</h2>
                 <ul>
                     {jsonData.map((item) => (
@@ -83,9 +83,9 @@ const Example = () => {
             <section>
                 <h2>PutExample</h2>
                 <button onClick={handleUpdateData}>Update Data</button>
-            </section>
-        </div>
-    );
+            </section> */}
+      <EmailForm />
+    </div>
+  );
 };
-export default Example
-;
+export default Example;
