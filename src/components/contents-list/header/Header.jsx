@@ -22,8 +22,18 @@ const Header = () => {
           <div className="bottom--left--desc">등록된 전체 메일 유형입니다.</div>
         </div>
         <div className="bottom--right">
-          <Button desc="등록" size="small" border={true} color="#191919" />
-          <Button desc="삭제" size="small" border={true} color="#191919" />
+          <Button
+            desc="등록"
+            size="small"
+            border="1px solid #CCD0E7"
+            color="#191919"
+          />
+          <Button
+            desc="삭제"
+            size="small"
+            border="1px solid #CCD0E7"
+            color="#191919"
+          />
         </div>
       </div>
     </S.ListHeader>
