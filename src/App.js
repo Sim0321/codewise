@@ -1,14 +1,7 @@
-import Example from "./example/Example";
-import {useState} from "react";
+import { GlobalStyle } from "./styles/GlobalStyle";
 
 function App() {
-
-
-    return (
-        <div className="App">
-            <Example/>
-        </div>
-    );
+  return <GlobalStyle></GlobalStyle>;
 }
 
 export default App;
