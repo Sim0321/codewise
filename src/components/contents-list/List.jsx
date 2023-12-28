@@ -9,14 +9,15 @@ const List = () => {
   const option = { limit: 5, currentPage: 10 };
   // const { data, error, isLoading } = useApi("GET");
   const { data, error, isLoading } = useApi("GET", {
-    limit: 5,
+    // limit: 10,
     // mailType: "Notification",
     // mailTitle: "New Feature Announcement",
-    currentPage: 10,
+    currentPage: 3,
   });
   console.log("페이지 조회 :", data);
-  const { data: testData } = useApi("GET");
-  console.log("전체조회 -----", testData);
+  // const { data: allData } = useApi("GET");
+  // console.log(allData);
+  // console.log("전체조회 -----", allData);
   return (
     <S.ListContainer>
       <Header />

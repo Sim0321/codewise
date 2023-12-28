@@ -10,8 +10,8 @@ export const getContentsList = async () => {
 };
 
 export const getContentsListOption = async (option) => {
-  console.log("get RequestData 있을 때 ==>", option);
+  // console.log("get RequestData 있을 때 ==>", option);
   const response = await mockApi.get(option);
-  console.log("get RequestData :", response);
+  // console.log("get RequestData :", response);
   return response;
 };
