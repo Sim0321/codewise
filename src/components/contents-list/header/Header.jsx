@@ -4,7 +4,7 @@ import { ReactComponent as ListIcon } from "../../../assets/icon/list.svg";
 import { ReactComponent as Close } from "../../../assets/icon/close.svg";
 
 import * as S from "./Header.style";
-import Button from "./../../common/Button";
+import Button from "../../common/button/Button";
 
 const Header = () => {
   return (

@@ -19,13 +19,9 @@ export const Table = styled.div`
     max-width: 147px;
   }
 
-  .checkbox {
+  .checkbox-svg {
     width: 12px;
     height: 12px;
-    border: 1px solid #cdd2ed;
-    background-color: ${theme.backGround.white};
-    border-radius: 2px;
-    cursor: pointer;
     margin-right: 19px;
   }
 `;
@@ -111,11 +107,34 @@ export const TableBottomWrap = styled.div`
       display: flex;
       align-items: center;
       justify-content: center;
+      position: relative;
       gap: 9px;
       width: 50px;
       height: 20px;
       background-color: ${theme.backGround.white};
       cursor: pointer;
+      .select-box {
+        background-color: ${theme.backGround.white};
+        width: 100%;
+        position: absolute;
+        top: 100%;
+        margin-top: 2px;
+        border-radius: 4px;
+        overflow: hidden;
+        li {
+          border-bottom: 1px solid ${theme.border.gray};
+          padding: 2px 0;
+          text-align: center;
+          height: 20px;
+          transition: all 0.3s ease-in-out;
+          &:nth-last-child(1) {
+            border-bottom: none;
+          }
+          &:hover {
+            background-color: #e9eef4;
+          }
+        }
+      }
     }
   }
   &__page--meta {

@@ -5,7 +5,10 @@ export const Content = styled.li`
   padding-left: 38px;
   width: 100%;
   border-bottom: 1px solid ${theme.border.gray};
-  background-color: ${theme.backGround.white};
+  background-color: ${(p) =>
+    p.checked
+      ? `${theme.backGround.columChecked}`
+      : `${theme.backGround.white}`};
   transition: all 0.3s;
   display: flex;
   align-items: center;

@@ -132,7 +132,7 @@ class MockApi {
     };
 
     const tempPageDto = {
-      // limit: limit || this.#db.articles.length, //100
+      // limit: limit || this.#db.articles.length,
       limit: limit || 10, //기본 값 10개로 수정
       currentPage: currentPage || 1,
     };
@@ -141,14 +141,14 @@ class MockApi {
       let tempDB = this.#db.articles.filter((value) =>
         this.#checkObjectValue(tempMailDto, value)
       );
+      // 함수로 리펙토링하기
       const { limit, currentPage } = tempPageDto;
-      // 함수로 바꾸기
       const endIndex = limit * currentPage;
 
-      tempPageDto.totalPage = Math.ceil(tempDB.length / endIndex);
+      tempPageDto.totalPage = Math.ceil(tempDB.length / limit);
       tempDB = tempDB.slice(0, endIndex);
 
-      console.log("최종 :::", tempDB);
+      // console.log("최종 :::", tempDB);
       const tempResult = {
         articles: tempDB,
         page: tempPageDto,
@@ -227,6 +227,7 @@ class MockApi {
     return `${year}-${
       month < 10 ? "0" + month : month
     }-${day}T${hours}:${minutes}:${seconds}Z`;
+    // }-${day}T${hours}:${minutes}Z`;
   }
 
   #checkObjectValue(object, compereValue) {
@@ -238,11 +239,6 @@ class MockApi {
       }
     });
     return checkData;
-  }
-
-  #calcPage(limit, currentPage) {
-    const index = limit * currentPage;
-    return index;
   }
 
   #sleep(duration = 1000) {

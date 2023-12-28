@@ -48,3 +48,5 @@ const useApi = (method, requestData) => {
 };
 
 export default useApi;
+
+// method, requestDate로 모듈을 불러와 통신하는 훅
