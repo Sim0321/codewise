@@ -6,6 +6,7 @@ import TableList from "./list/TableList";
 import TableBottom from "./bottom/TableBottom";
 import { useRecoilState } from "recoil";
 import { checkListSelector } from "../../../store/checkAtom";
+import Top from "./top/Top";
 
 const Table = ({ data, error, isLoading }) => {
   const [checkList, setCheckList] = useRecoilState(checkListSelector);
@@ -31,6 +32,7 @@ const Table = ({ data, error, isLoading }) => {
   };
   return (
     <S.Table>
+      <Top total={data.totalEl} />
       <TableHeader checkAll={checkAll} />
       <TableList
         data={data}

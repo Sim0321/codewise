@@ -7,13 +7,16 @@ import { ReactComponent as Right } from "../../../../assets/icon/rightArrow.svg"
 import { ReactComponent as First } from "../../../../assets/icon/firstArrow.svg";
 import { ReactComponent as Last } from "../../../../assets/icon/lastArrow.svg";
 import { ReactComponent as Down } from "../../../../assets/icon/downArrow.svg";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { limitSelector, pageSelector } from "../../../../store/request";
 import SelectItem from "./SelectItem";
+import { checkListSelector } from "../../../../store/checkAtom";
 
 const TableBottom = ({ data }) => {
   const [page, setPage] = useRecoilState(pageSelector);
   const [limit, setLimit] = useRecoilState(limitSelector);
+
+  const setCheckList = useSetRecoilState(checkListSelector);
 
   const [open, setOpen] = useState(false);
 
@@ -23,10 +26,12 @@ const TableBottom = ({ data }) => {
   // page+1
   const plusPage = () => {
     setPage(page + 1);
+    setCheckList([]);
   };
   // page-1
   const minusPage = () => {
     setPage(page - 1);
+    setCheckList([]);
   };
 
   // selector open
@@ -39,13 +44,16 @@ const TableBottom = ({ data }) => {
     setOpen(!open);
     setLimit(e.target.innerHTML);
     setPage(1);
+    setCheckList([]);
   };
 
   const lastPage = () => {
     setPage(data.page.totalPage);
+    setCheckList([]);
   };
   const firstPage = () => {
     setPage(1);
+    setCheckList([]);
   };
 
   const renderSelectArray = () => {

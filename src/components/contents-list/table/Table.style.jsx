@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { theme } from "../../../styles/theme";
 
 export const Table = styled.div`
-  height: 250px;
+  /* height: 250px; */
   .table-number {
     max-width: 52px;
   }
@@ -48,7 +48,7 @@ export const TableListWrap = styled.ul`
   height: 230px;
 
   overflow-y: auto;
-
+  /* overflow-x: none; */
   &::-webkit-scrollbar {
     width: 5px;
   }

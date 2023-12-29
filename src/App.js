@@ -1,12 +1,12 @@
 import { RecoilRoot } from "recoil";
-import AdminPage from "./pages/AdminPage";
+import ContentPage from "./pages/ContentPage";
 import { GlobalStyle } from "./styles/GlobalStyle";
 
 function App() {
   return (
     <RecoilRoot>
       <GlobalStyle />
-      <AdminPage />
+      <ContentPage />
     </RecoilRoot>
   );
 }

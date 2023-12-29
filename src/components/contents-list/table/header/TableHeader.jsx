@@ -11,7 +11,10 @@ const TableHeader = ({ checkAll }) => {
   const checkList = useRecoilValue(checkListSelector);
   return (
     <S.TableHeaderWrap>
-      <CheckBox checked={checkList.length === limit} onChange={checkAll} />
+      <CheckBox
+        checked={checkList.length === Number(limit)}
+        onChange={checkAll}
+      />
       <div className="title table-number">NO</div>
       <div className="title table-type">메일 유형</div>
       <div className="title table-title">메일 발송 제목</div>
