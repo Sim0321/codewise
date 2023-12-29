@@ -1,5 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
+import { theme } from "./theme";
 
 export const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -13,6 +14,8 @@ export const GlobalStyle = createGlobalStyle`
   
   body{
     font-size: 1.6rem;
+    background-color: ${theme.backGround.default};
+    font-family: 'Noto Sans KR', sans-serif;
   }
 
   
