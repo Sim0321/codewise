@@ -1,4 +1,4 @@
-import React, { startTransition, useState } from "react";
+import React, { useState } from "react";
 import * as S from "../Table.style";
 
 import { ReactComponent as Download } from "../../../../assets/icon/download.svg";
@@ -7,7 +7,7 @@ import { ReactComponent as Right } from "../../../../assets/icon/rightArrow.svg"
 import { ReactComponent as First } from "../../../../assets/icon/firstArrow.svg";
 import { ReactComponent as Last } from "../../../../assets/icon/lastArrow.svg";
 import { ReactComponent as Down } from "../../../../assets/icon/downArrow.svg";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { limitSelector, pageSelector } from "../../../../store/request";
 import SelectItem from "./SelectItem";
 
@@ -47,6 +47,12 @@ const TableBottom = ({ data }) => {
   const firstPage = () => {
     setPage(1);
   };
+
+  const renderSelectArray = () => {
+    return selectArray.map((num, index) => (
+      <SelectItem key={index} num={num} choseLimit={choseLimit} />
+    ));
+  };
   return (
     <S.TableBottomWrap>
       <div className="excel">
@@ -66,13 +72,7 @@ const TableBottom = ({ data }) => {
         <div className="page-size" onClick={openSelect}>
           <div className="page-size__select">{limit}</div>
           <Down />
-          {open && (
-            <ul className="select-box">
-              {selectArray.map((num, index) => (
-                <SelectItem key={index} num={num} choseLimit={choseLimit} />
-              ))}
-            </ul>
-          )}
+          {open && <ul className="select-box">{renderSelectArray()}</ul>}
         </div>
       </div>
       <div className="page--meta">
