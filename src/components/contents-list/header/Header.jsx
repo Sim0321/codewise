@@ -6,7 +6,7 @@ import { ReactComponent as Close } from "../../../assets/icon/close.svg";
 import * as S from "./Header.style";
 import Button from "../../common/button/Button";
 
-const Header = () => {
+const Header = ({ total }) => {
   return (
     <S.ListHeader>
       <div className="top">
@@ -18,7 +18,7 @@ const Header = () => {
       </div>
       <div className="bottom">
         <div className="bottom--left">
-          <div className="bottom--left--total">현재 등록 : 10</div>
+          <div className="bottom--left--total">현재 등록 : {total}</div>
           <div className="bottom--left--desc">등록된 전체 메일 유형입니다.</div>
         </div>
         <div className="bottom--right">
