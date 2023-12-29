@@ -5,7 +5,7 @@ import { editContent } from "../api/put";
 import { deleteContent } from "../api/delete";
 
 const useApi = (method, requestData) => {
-  // console.log(method, requestData);
+  // console.log(method, await requestData);
   // console.log("들어옴?");
   const [data, setData] = useState([]);
   // console.log("커스텀 훅 data :", data);
@@ -13,25 +13,22 @@ const useApi = (method, requestData) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchData = async (method, requestData) => {
-    // console.log("fetchData 안에서 :::", method, requestData);
+    // console.log("커스텀 훅:::", method, requestData);
+    setIsLoading(true);
     try {
-      setIsLoading(true);
+      let response;
       if (method === "GET") {
-        // console.log("커스텀 훅");
-        const response = requestData
+        response = requestData
           ? await getContentsListOption(requestData)
           : await getContentsList();
-        setData(response);
       } else if (method === "POST") {
-        const response = await createContent(requestData);
-        setData(response);
+        response = await createContent(requestData);
       } else if (method === "PUT") {
-        const response = await editContent(requestData);
-        setData(response);
+        response = await editContent(requestData);
       } else if (method === "DELETE") {
-        const response = await deleteContent(requestData);
-        setData(response);
+        response = await deleteContent(requestData);
       }
+      setData(response);
     } catch (e) {
       setError(e);
     } finally {
@@ -39,12 +36,7 @@ const useApi = (method, requestData) => {
     }
   };
 
-  useEffect(() => {
-    // console.log("useApiMethod 안에서");
-    fetchData(method, requestData);
-  }, []);
-
-  return { data, error, isLoading };
+  return { data, error, isLoading, fetchData };
 };
 
 export default useApi;

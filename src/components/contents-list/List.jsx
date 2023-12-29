@@ -1,24 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import * as S from "./List.style";
 
 import Header from "./header/Header";
 import Table from "./table/Table";
+import { useRecoilValue } from "recoil";
+import { limitSelector, pageSelector } from "../../store/request";
+import useApi from "../../hooks/useApi";
 
 const List = () => {
-  // const [limitValue, setLimitValue] = useRecoilState(limitAtom);
-  // console.log(limitValue);
+  const limit = useRecoilValue(limitSelector);
+  const currentPage = useRecoilValue(pageSelector);
+  const { data, error, isLoading, fetchData } = useApi();
 
-  // const { data, error, isLoading } = useApi("GET", {
-  //   limit: 20,
-  //   // mailType: "Notification",
-  //   // mailTitle: "New Feature Announcement",
-  //   currentPage: 1,
-  //   // 예외처리 추가
-  // });
+  useEffect(() => {
+    fetchData("GET", { limit, currentPage });
+  }, [limit, currentPage]);
+
   return (
     <S.ListContainer>
-      <Header />
-      <Table />
+      <Header total={data.totalEl} />
+      <Table data={data} error={error} isLoading={isLoading} />
     </S.ListContainer>
   );
 };

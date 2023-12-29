@@ -1,15 +1,15 @@
 import { atom, selector } from "recoil";
 
-export const allCheckAtom = atom({
-  key: "allCheckAtom",
-  default: false,
-});
+// export const allCheckAtom = atom({
+//   key: "allCheckAtom",
+//   default: false,
+// });
 
-export const allCheckSelector = selector({
-  key: "allCheckSelector",
-  get: ({ get }) => get(allCheckAtom),
-  set: ({ set }, boolean) => set(allCheckAtom, boolean),
-});
+// export const allCheckSelector = selector({
+//   key: "allCheckSelector",
+//   get: ({ get }) => get(allCheckAtom),
+//   set: ({ set }, boolean) => set(allCheckAtom, boolean),
+// });
 
 export const checkListAtom = atom({
   key: "checkListAtom",
