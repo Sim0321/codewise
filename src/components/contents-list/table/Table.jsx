@@ -16,7 +16,7 @@ const Table = () => {
   const page = useRecoilValue(pageSelector);
   const { data, error, isLoading } = useApi("GET", {
     limit,
-    page, // 이 부분 수정해야함
+    page, // 이 부분 수정해야함sdfsdffsd
   });
   console.log("data ::", data);
 
