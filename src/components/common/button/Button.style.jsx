@@ -28,6 +28,13 @@ export const Button = styled.button`
   height: ${(p) => sizes[p.size || "default"].height};
   border-radius: ${(p) => sizes[p.size || "default"].borderRadius};
   background-color: ${(p) => p.bg || "#fff"};
-  border: ${(p) => (p.border ? `1px solid ${theme.border.gray}` : `none`)};
+  border: ${(p) => p.border || "none"};
   color: ${(p) => p.color || `${theme.color.black}`};
+  cursor: pointer;
+  svg {
+    width: 9px;
+    height: 10px;
+    margin-right: 5px;
+  }
+  // svg 추가시 flex 추가
 `;

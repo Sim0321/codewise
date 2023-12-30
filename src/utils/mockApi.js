@@ -168,7 +168,7 @@ class MockApi {
    * 생성 api
    * @param mailType 'Inserted Type' [Type] String
    * @param mailTitle 'Inserted Title' [Type] String
-   * @param ismailIUse 'Y' || 'N' [Type] String
+   * @param ismailUse 'Y' || 'N' [Type] String
    * @param mailContent 'Inserted Content' [Type] String
    * @param reason 'Inserted Reason' [Type] String
    * @return data {
@@ -176,7 +176,13 @@ class MockApi {
    * status [Type] Number
    * }
    * */
-  async post({ mailType, mailTitle, ismailIUse, mailContent, reason }) {
+  async post({ mailType, mailTitle, ismailUse, mailContent, reason }) {
+    console.log("찍혀>>>");
+    console.log("mailType::", mailType);
+    console.log("mailTitle::", mailTitle);
+    console.log("ismailUse::", ismailUse);
+    console.log("mailContent::", mailContent);
+    console.log("reason::", reason);
     const result = {
       data: null,
       status: null,
@@ -187,7 +193,7 @@ class MockApi {
       mailUid: this.#db.articles.length + 1,
       mailType: mailType,
       mailTitle: mailTitle,
-      ismailIUse: ismailIUse,
+      ismailIUse: ismailUse,
       mailContent: mailContent,
       modificationDate: this.#getLocalDate,
       reason: reason,
@@ -202,6 +208,7 @@ class MockApi {
       return result;
     }
 
+    console.log(result);
     return result;
   }
 
