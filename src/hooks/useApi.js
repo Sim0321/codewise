@@ -3,7 +3,6 @@ import { getContentsList, getContentsListOption } from "../api/get";
 import { createContent } from "../api/post";
 import { editContent } from "../api/put";
 import { deleteContent } from "../api/delete";
-
 const useApi = () => {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);

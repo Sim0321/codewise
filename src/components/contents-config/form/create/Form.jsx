@@ -1,12 +1,24 @@
 import React, { useEffect, useState } from "react";
-import Editor from "./editor/Editor";
+import Editor from "../editor/Editor";
 import * as S from "./Form.style";
 // import EmailForm from "../../../EmailForm";
-import Button from "../../common/button/Button";
-import { Input } from "../../common/input/InputText.style";
-import useApi from "../../../hooks/useApi";
+import Button from "../../../common/button/Button";
+import { Input } from "../../../common/input/InputText.style";
+import useApi from "../../../../hooks/useApi";
+import { useMutation, useQueryClient } from "react-query";
+import { createContent } from "../../../../api/post";
+import { useRecoilState, useRecoilValue } from "recoil";
+import {
+  purposeSelector,
+  readDetailSelector,
+} from "../../../../store/purposeAtome";
 
 const Form = () => {
+  // const [purpose, setPurpose] = useRecoilState(purposeSelector);
+
+  // const detail = useRecoilValue(readDetailSelector);
+  // console.log(purpose);
+  // console.log("detail::::", detail);
   const [editorValue, setEditorValue] = useState(`<h1>원격 접속 로그인 알림</h1>
   <p><span style="font-size: 14px;"><span style="background-color: rgb(149, 165, 166); color: rgb(255, 255, 255);">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;제목&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span>&nbsp; &nbsp; {{site_name}} 소명 요청 안내</span></p>
   <p><span style="font-size: 14px;"><span style="background-color: rgb(149, 165, 166); color: rgb(255, 255, 255);">&nbsp; &nbsp;탐지시나리오&nbsp; </span><span style="color: rgb(255, 255, 255);">&nbsp; &nbsp; </span><span style="color: rgb(0, 0, 0);">{{snm}}</span></span></p>
@@ -15,6 +27,8 @@ const Form = () => {
   <p><span style="font-size: 14px;"><span style="color: rgb(0, 0, 0);"><span style="color: rgb(255, 255, 255); background-color: rgb(149, 165, 166);">&nbsp; &nbsp; &nbsp;탐지 시각&nbsp; &nbsp; &nbsp;</span>&nbsp; &nbsp; {{detect_run_time}}</span></span></p>
   `);
 
+  const queryClient = useQueryClient();
+
   const handleQuillChange = (content, delta, source, editor) => {
     setEditorValue(editor.getContents());
   };
@@ -22,7 +36,7 @@ const Form = () => {
   const [postBody, setPostBody] = useState({
     mailType: "",
     mailTitle: "",
-    ismailUse: "Y",
+    ismailIUse: "Y",
     mailContent: "",
     reason: "",
   });
@@ -35,28 +49,50 @@ const Form = () => {
   };
 
   const handleRadio = (e) => {
-    setPostBody({ ...postBody, ismailUse: e.target.id });
+    setPostBody({ ...postBody, ismailIUse: e.target.id });
   };
 
   const clickRedCircle = (status) => {
-    setPostBody({ ...postBody, ismailUse: status });
+    setPostBody({ ...postBody, ismailIUse: status });
   };
 
-  const { fetchData } = useApi();
+  // const { fetchData } = useApi();
 
   // console.log("data :::::::::", data);
 
+  const { mutate: createPost } = useMutation(createContent, {
+    onSuccess: (res) => {
+      console.log("post 성공");
+      setPostBody({
+        mailType: "",
+        mailTitle: "",
+        ismailIUse: "Y",
+        mailContent: "",
+        reason: "",
+      });
+      queryClient.invalidateQueries("contentList");
+    },
+  });
+
   const clickSubmit = (e) => {
-    console.log("임시요");
     e.preventDefault();
     // 없을 때 예외처리
-    console.log(postBody);
-    console.log("content ::", editorValue);
-    const stringEditorValue = JSON.stringify(editorValue);
+    if (
+      postBody.mailType &&
+      postBody.mailTitle &&
+      editorValue &&
+      postBody.reason
+    ) {
+      const stringEditorValue = JSON.stringify(editorValue);
 
-    const newPostBody = { ...postBody, mailContent: stringEditorValue };
+      const newPostBody = { ...postBody, mailContent: stringEditorValue };
 
-    fetchData("POST", newPostBody);
+      createPost(newPostBody);
+    } else {
+      alert("빈칸을 다 채워주세요"); // 유효성 검사
+    }
+
+    // fetchData("POST", newPostBody);
   };
 
   return (
@@ -80,24 +116,24 @@ const Form = () => {
           <label>메일 사용여부</label>
           <div className="label-container">
             <div className="circle" onClick={() => clickRedCircle("Y")}>
-              {postBody.ismailUse === "Y" && <div className="red" />}
+              {postBody.ismailIUse === "Y" && <div className="red" />}
             </div>
             <input
               type="radio"
               id="Y"
               onChange={handleRadio}
-              checked={postBody.ismailUse === "Y"}
+              checked={postBody.ismailIUse === "Y"}
             />
             <label htmlFor="Y">사용</label>
 
             <div className="circle" onClick={() => clickRedCircle("N")}>
-              {postBody.ismailUse === "N" && <div className="red" />}
+              {postBody.ismailIUse === "N" && <div className="red" />}
             </div>
             <input
               type="radio"
               id="N"
               onChange={handleRadio}
-              checked={postBody.ismailUse === "N"}
+              checked={postBody.ismailIUse === "N"}
             />
             <label htmlFor="N">미사용</label>
           </div>

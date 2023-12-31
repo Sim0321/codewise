@@ -11,6 +11,7 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import { limitSelector, pageSelector } from "../../../../store/request";
 import SelectItem from "./SelectItem";
 import { checkListSelector } from "../../../../store/checkAtom";
+import { useQueryClient } from "react-query";
 
 const TableBottom = ({ data }) => {
   const [page, setPage] = useRecoilState(pageSelector);
@@ -22,16 +23,21 @@ const TableBottom = ({ data }) => {
 
   const selectArray = [1, 5, 10, 20];
 
+  const queryClient = useQueryClient();
+
   //
   // page+1
   const plusPage = () => {
     setPage(page + 1);
     setCheckList([]);
+    console.log("눌림");
+    // queryClient.invalidateQueries("contentList");
   };
   // page-1
   const minusPage = () => {
     setPage(page - 1);
     setCheckList([]);
+    // queryClient.invalidateQueries("contentList");
   };
 
   // selector open
@@ -45,15 +51,19 @@ const TableBottom = ({ data }) => {
     setLimit(e.target.innerHTML);
     setPage(1);
     setCheckList([]);
+
+    // queryClient.invalidateQueries("contentList");
   };
 
   const lastPage = () => {
     setPage(data.page.totalPage);
     setCheckList([]);
+    // queryClient.invalidateQueries("contentList");
   };
   const firstPage = () => {
     setPage(1);
     setCheckList([]);
+    // queryClient.invalidateQueries("contentList");
   };
 
   const renderSelectArray = () => {
@@ -72,8 +82,8 @@ const TableBottom = ({ data }) => {
           <First onClick={firstPage} />
           <Left onClick={minusPage} />
           <span>페이지</span>
-          <div className="current">{data.page?.currentPage}</div>
-          <p>/ {data.page?.totalPage}</p>
+          <div className="current">{data?.page.currentPage}</div>
+          <p>/ {data?.page.totalPage}</p>
           <Right onClick={plusPage} />
           <Last onClick={lastPage} />
         </div>

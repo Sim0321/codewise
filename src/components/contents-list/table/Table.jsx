@@ -32,7 +32,7 @@ const Table = ({ data, error, isLoading }) => {
   };
   return (
     <S.Table>
-      <Top total={data.totalEl} />
+      <Top total={data?.totalEl} />
       <TableHeader checkAll={checkAll} />
       <TableList
         data={data}

@@ -1,8 +1,11 @@
 import React from "react";
 import * as S from "../Table.style";
 import Content from "../content/Content";
+import { useSetRecoilState } from "recoil";
+import { purposeSelector } from "../../../../store/purposeAtome";
 
 const TableList = ({ data, error, isLoading, checkSingle }) => {
+  // console.log(data[1]);
   // 컨텐츠 렌더하는 함수
   const renderContent = () => {
     if (isLoading) {
@@ -12,7 +15,7 @@ const TableList = ({ data, error, isLoading, checkSingle }) => {
       return <p>Error : {error}</p>;
     }
     if (data.length !== 0) {
-      return data.articles.map((content) => {
+      return data.articles?.map((content) => {
         return (
           <Content
             key={content.mailUid}

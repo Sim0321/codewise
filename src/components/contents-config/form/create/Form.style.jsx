@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { theme } from "./../../../styles/theme";
+import { theme } from "../../../../styles/theme";
 
 export const FormContainer = styled.form`
   padding: 20px 30px 30px 20px;

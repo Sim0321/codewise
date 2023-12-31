@@ -16,7 +16,9 @@ class MockApi {
    * status [Type] Number
    * }
    * */
-  async delete({ mailUidList = [] || 0 }) {
+  async delete(mailUidList = [] || 0) {
+    console.log("여기 잘 됨?");
+    console.log("mailUidList ::", mailUidList);
     const result = {
       data: null,
       status: null,
@@ -176,13 +178,13 @@ class MockApi {
    * status [Type] Number
    * }
    * */
-  async post({ mailType, mailTitle, ismailUse, mailContent, reason }) {
-    console.log("찍혀>>>");
-    console.log("mailType::", mailType);
-    console.log("mailTitle::", mailTitle);
-    console.log("ismailUse::", ismailUse);
-    console.log("mailContent::", mailContent);
-    console.log("reason::", reason);
+  async post({ mailType, mailTitle, ismailIUse, mailContent, reason }) {
+    // console.log("찍혀>>>");
+    // console.log("mailType::", mailType);
+    // console.log("mailTitle::", mailTitle);
+    // console.log("ismailUse::", ismailUse);
+    // console.log("mailContent::", mailContent);
+    // console.log("reason::", reason);
     const result = {
       data: null,
       status: null,
@@ -193,9 +195,9 @@ class MockApi {
       mailUid: this.#db.articles.length + 1,
       mailType: mailType,
       mailTitle: mailTitle,
-      ismailIUse: ismailUse,
+      ismailIUse: ismailIUse,
       mailContent: mailContent,
-      modificationDate: this.#getLocalDate,
+      modificationDate: this.#getLocalDate(),
       reason: reason,
     };
 
@@ -208,7 +210,6 @@ class MockApi {
       return result;
     }
 
-    console.log(result);
     return result;
   }
 
