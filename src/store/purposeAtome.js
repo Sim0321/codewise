@@ -2,7 +2,7 @@ import { atom, selector } from "recoil";
 
 export const purposeAtome = atom({
   key: "purposeAtome",
-  default: "create",
+  default: "default",
 });
 
 export const purposeSelector = selector({

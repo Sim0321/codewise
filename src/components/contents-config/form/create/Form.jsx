@@ -1,24 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Editor from "../editor/Editor";
 import * as S from "./Form.style";
 // import EmailForm from "../../../EmailForm";
 import Button from "../../../common/button/Button";
 import { Input } from "../../../common/input/InputText.style";
-import useApi from "../../../../hooks/useApi";
 import { useMutation, useQueryClient } from "react-query";
 import { createContent } from "../../../../api/post";
-import { useRecoilState, useRecoilValue } from "recoil";
-import {
-  purposeSelector,
-  readDetailSelector,
-} from "../../../../store/purposeAtome";
+import { useRecoilState } from "recoil";
+import { purposeSelector } from "../../../../store/purposeAtome";
 
 const Form = () => {
-  // const [purpose, setPurpose] = useRecoilState(purposeSelector);
+  const [purpose, setPurpose] = useRecoilState(purposeSelector);
+  // console.log("purpose ::", purpose);
 
-  // const detail = useRecoilValue(readDetailSelector);
-  // console.log(purpose);
-  // console.log("detail::::", detail);
   const [editorValue, setEditorValue] = useState(`<h1>원격 접속 로그인 알림</h1>
   <p><span style="font-size: 14px;"><span style="background-color: rgb(149, 165, 166); color: rgb(255, 255, 255);">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;제목&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span>&nbsp; &nbsp; {{site_name}} 소명 요청 안내</span></p>
   <p><span style="font-size: 14px;"><span style="background-color: rgb(149, 165, 166); color: rgb(255, 255, 255);">&nbsp; &nbsp;탐지시나리오&nbsp; </span><span style="color: rgb(255, 255, 255);">&nbsp; &nbsp; </span><span style="color: rgb(0, 0, 0);">{{snm}}</span></span></p>
@@ -37,11 +31,8 @@ const Form = () => {
     mailType: "",
     mailTitle: "",
     ismailIUse: "Y",
-    mailContent: "",
     reason: "",
   });
-
-  // console.log(postBody);
 
   const onChangeInput = (e) => {
     const { name, value } = e.target;
@@ -56,10 +47,6 @@ const Form = () => {
     setPostBody({ ...postBody, ismailIUse: status });
   };
 
-  // const { fetchData } = useApi();
-
-  // console.log("data :::::::::", data);
-
   const { mutate: createPost } = useMutation(createContent, {
     onSuccess: (res) => {
       console.log("post 성공");
@@ -67,9 +54,9 @@ const Form = () => {
         mailType: "",
         mailTitle: "",
         ismailIUse: "Y",
-        mailContent: "",
         reason: "",
       });
+      setEditorValue("");
       queryClient.invalidateQueries("contentList");
     },
   });
@@ -91,8 +78,6 @@ const Form = () => {
     } else {
       alert("빈칸을 다 채워주세요"); // 유효성 검사
     }
-
-    // fetchData("POST", newPostBody);
   };
 
   return (

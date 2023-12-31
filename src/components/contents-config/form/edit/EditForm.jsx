@@ -1,41 +1,21 @@
 import React, { useEffect, useState } from "react";
 import Editor from "../editor/Editor";
 import * as S from "./EditForm.style";
-// import EmailForm from "../../../EmailForm";
 import Button from "../../../common/button/Button";
 import { Input } from "../../../common/input/InputText.style";
-import useApi from "../../../../hooks/useApi";
 import { useMutation, useQueryClient } from "react-query";
-import { createContent } from "../../../../api/post";
-import { useRecoilState, useRecoilValue } from "recoil";
-import {
-  purposeSelector,
-  readDetailSelector,
-} from "../../../../store/purposeAtome";
+import { useRecoilState } from "recoil";
+import { editContent } from "./../../../../api/put";
+import { readDetailSelector } from "../../../../store/purposeAtome";
 
 const EditForm = () => {
-  const contentData = useRecoilValue(readDetailSelector);
+  const [contentData, setContentData] = useRecoilState(readDetailSelector);
 
-  // contentData로 할지 postData로 할지 정하기
+  const [editorValue, setEditorValue] = useState("");
 
-  console.log("수정 ㅍ폼 ::", contentData);
-
-  // const detail = useRecoilValue(readDetailSelector);
-  // console.log(purpose);
-  // console.log("detail::::", detail);
-
-  // 등록한 것 라이브러리 사용한 것과, 아닌것 비교하기
   const queryClient = useQueryClient();
 
-  const [postBody, setPostBody] = useState({
-    mailType: contentData?.mailType,
-    mailTitle: contentData?.mailType,
-    ismailIUse: contentData?.ismailIUse,
-    mailContent: "",
-    reason: contentData?.reason,
-  });
-  console.log("수정 poseBody ::", postBody);
-
+  // 등록한 것 라이브러리 사용한 것과, 아닌것 비교하기
   useEffect(() => {
     const checkContent = contentData?.mailContent.split('"')[0] === "{";
     if (checkContent) {
@@ -43,13 +23,7 @@ const EditForm = () => {
     } else {
       setEditorValue(contentData?.mailContent);
     }
-
-    // if(contentData){
-    //   setPostBody({...postBody, })
-    // }
   }, [contentData]);
-
-  const [editorValue, setEditorValue] = useState("");
 
   const handleQuillChange = (content, delta, source, editor) => {
     setEditorValue(editor.getContents());
@@ -57,32 +31,20 @@ const EditForm = () => {
 
   const onChangeInput = (e) => {
     const { name, value } = e.target;
-    console.log("sdfds");
-    setPostBody({ ...postBody, [name]: value });
+    console.log(value);
+    setContentData({ ...contentData, [name]: value });
   };
 
   const handleRadio = (e) => {
-    setPostBody({ ...postBody, ismailIUse: e.target.id });
+    setContentData({ ...contentData, ismailIUse: e.target.id });
   };
 
   const clickRedCircle = (status) => {
-    setPostBody({ ...postBody, ismailIUse: status });
+    setContentData({ ...contentData, ismailIUse: status });
   };
 
-  // const { fetchData } = useApi();
-
-  // console.log("data :::::::::", data);
-
-  const { mutate: createPost } = useMutation(createContent, {
-    onSuccess: (res) => {
-      console.log("post 성공");
-      setPostBody({
-        mailType: "",
-        mailTitle: "",
-        ismailIUse: "Y",
-        mailContent: "",
-        reason: "",
-      });
+  const { mutate: editPost } = useMutation(editContent, {
+    onSuccess: () => {
       queryClient.invalidateQueries("contentList");
     },
   });
@@ -91,26 +53,24 @@ const EditForm = () => {
     e.preventDefault();
     // 없을 때 예외처리
     if (
-      postBody.mailType &&
-      postBody.mailTitle &&
+      contentData.mailType &&
+      contentData.mailTitle &&
       editorValue &&
-      postBody.reason
+      contentData.reason
     ) {
       const stringEditorValue = JSON.stringify(editorValue);
 
-      const newPostBody = { ...postBody, mailContent: stringEditorValue };
+      const newPostBody = { ...contentData, mailContent: stringEditorValue };
 
-      createPost(newPostBody);
+      editPost(newPostBody);
     } else {
       alert("빈칸을 다 채워주세요"); // 유효성 검사
     }
-
-    // fetchData("POST", newPostBody);
   };
 
   return (
     <S.EditFormContainer>
-      <S.FlexBox className="label-flex" height="40px">
+      <S.FlexBox height="40px">
         <div className="type email-item">
           <label htmlFor="type">메일 유형</label>
           <div className="input-wrapper">
@@ -153,7 +113,7 @@ const EditForm = () => {
         </div>
       </S.FlexBox>
 
-      <S.FlexBox className="label-flex" height="40px">
+      <S.FlexBox height="40px">
         <div className="title email-item">
           <label htmlFor="title">메일 발송제목</label>
           <div className="input-wrapper">
@@ -172,7 +132,7 @@ const EditForm = () => {
         </div>
       </S.FlexBox>
 
-      <S.FlexBox className="editor-flex" height="350px">
+      <S.FlexBox height="350px">
         <div className="desc email-item">
           <label htmlFor="desc">메일 내용</label>
           <Editor

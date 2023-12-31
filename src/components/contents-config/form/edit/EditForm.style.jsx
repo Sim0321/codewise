@@ -101,9 +101,7 @@ export const FlexBox = styled.div`
   }
   .desc {
     position: relative;
-    /* background-color: skyblue; */
     .position {
-      /* background-color: pink; */
       width: 200px;
       height: 200px;
       position: absolute;

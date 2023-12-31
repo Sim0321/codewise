@@ -63,6 +63,12 @@ class MockApi {
    * }
    * */
   async put({ mailUid, mailType, mailTitle, ismailIUse, mailContent, reason }) {
+    console.log("mailUid ::", mailUid);
+    console.log("mailType ::", mailType);
+    console.log("mailTitle ::", mailTitle);
+    console.log("ismailIUse ::", ismailIUse);
+    console.log("mailContent ::", mailContent);
+    console.log("reason ::", reason);
     const result = {
       data: null,
       status: null,
@@ -86,7 +92,7 @@ class MockApi {
         mailTitle: mailTitle || this.#db.articles[dtoIndex].mailTitle,
         ismailIUse: ismailIUse || this.#db.articles[dtoIndex].ismailIUse,
         mailContent: mailContent || this.#db.articles[dtoIndex].mailContent,
-        modificationDate: this.#getLocalDate,
+        modificationDate: this.#getLocalDate(),
         reason: reason,
       };
 
@@ -98,6 +104,8 @@ class MockApi {
       this.#setResultFail(result);
       return result;
     }
+
+    console.log(result);
 
     return result;
   }

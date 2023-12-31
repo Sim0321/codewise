@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import * as S from "./List.style";
 
 import Table from "./table/Table";
@@ -17,7 +17,6 @@ const List = () => {
     () => getContentsListOption({ limit, currentPage })
   );
 
-  // console.log("dat ::::", data);
   return (
     <S.ListContainer>
       <Header desc="컨텐츠 목록" />
