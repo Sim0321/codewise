@@ -6,12 +6,10 @@ import { Input } from "../../../common/input/InputText.style";
 import { useMutation, useQueryClient } from "react-query";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { editContent } from "./../../../../api/put";
-import {
-  purposeSelector,
-  readDetailSelector,
-} from "../../../../store/purposeAtome";
+import { purposeSelector } from "../../../../store/purposeAtome";
 import Modal from "../../../common/modal/Modal";
 import ModalPreview from "../../../common/modal/children/ModalPreview";
+import { readDetailSelector } from "../../../../store/contentDetailAtom";
 
 const EditForm = () => {
   const [contentData, setContentData] = useRecoilState(readDetailSelector);
@@ -40,7 +38,7 @@ const EditForm = () => {
 
   const onChangeInput = (e) => {
     const { name, value } = e.target;
-    console.log(value);
+    // console.log(value);
     setContentData({ ...contentData, [name]: value });
   };
 
@@ -199,7 +197,7 @@ const EditForm = () => {
           onClick={clickClosePost}
         />
         <Button
-          desc="수정"
+          desc="수정 완료"
           size="big"
           bg="#191919"
           color="#fff"
@@ -208,7 +206,7 @@ const EditForm = () => {
       </div>
 
       {modalOpen && (
-        <Modal setModalOpen={setModalOpen}>
+        <Modal setModalOpen={setModalOpen} roll="preview">
           <ModalPreview data={contentData} editorValue={editorValue} />
         </Modal>
       )}

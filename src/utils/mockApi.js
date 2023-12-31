@@ -232,10 +232,14 @@ class MockApi {
     const minutes = currentDate.getMinutes();
     const seconds = currentDate.getSeconds();
 
-    return `${year}-${
-      month < 10 ? "0" + month : month
-    }-${day}T${hours}:${minutes}:${seconds}Z`;
-    // }-${day}T${hours}:${minutes}Z`;
+    // return `${year}-${
+    //   month < 10 ? "0" + month : month
+    // }-${day}T${hours}:${minutes}:${seconds}Z`;
+    return `${year}-${month < 10 ? "0" + month : month}-${
+      day < 10 ? "0" + day : day
+    }T${hours < 10 ? "0" + hours : hours}:${
+      minutes < 10 ? "0" + minutes : minutes
+    }:${seconds < 10 ? "0" + seconds : seconds}Z`;
   }
 
   #checkObjectValue(object, compereValue) {

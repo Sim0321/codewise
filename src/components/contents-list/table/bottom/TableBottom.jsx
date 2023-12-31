@@ -2,23 +2,30 @@ import React, { useState } from "react";
 import * as S from "./TableBottom.style";
 
 import { ReactComponent as Download } from "../../../../assets/icon/download.svg";
-import { ReactComponent as Left } from "../../../../assets/icon/leftArrow.svg";
-import { ReactComponent as Right } from "../../../../assets/icon/rightArrow.svg";
-import { ReactComponent as First } from "../../../../assets/icon/firstArrow.svg";
-import { ReactComponent as Last } from "../../../../assets/icon/lastArrow.svg";
 import { ReactComponent as Down } from "../../../../assets/icon/downArrow.svg";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { limitSelector, pageSelector } from "../../../../store/request";
+import { requestSelector } from "../../../../store/request";
 import SelectItem from "./SelectItem";
 import { checkListSelector } from "../../../../store/checkAtom";
 import { CSVLink } from "react-csv";
 import { useQuery } from "react-query";
 import { getContentsList } from "../../../../api/get";
 
+import {
+  FiChevronDown,
+  FiChevronLeft,
+  FiChevronRight,
+  FiChevronUp,
+  FiChevronsLeft,
+  FiChevronsRight,
+} from "react-icons/fi";
+
 const TableBottom = ({ data }) => {
-  console.log(data);
-  const [page, setPage] = useRecoilState(pageSelector);
-  const [limit, setLimit] = useRecoilState(limitSelector);
+  // console.log(data);
+  // const [page, setPage] = useRecoilState(pageSelector);
+  // const [limit, setLimit] = useRecoilState(limitSelector);
+
+  const [request, setRequest] = useRecoilState(requestSelector);
 
   const setCheckList = useSetRecoilState(checkListSelector);
 
@@ -29,13 +36,12 @@ const TableBottom = ({ data }) => {
   //
   // page+1
   const plusPage = () => {
-    setPage(page + 1);
+    setRequest({ ...request, currentPage: request.currentPage + 1 });
     setCheckList([]);
-    console.log("눌림");
   };
   // page-1
   const minusPage = () => {
-    setPage(page - 1);
+    setRequest({ ...request, currentPage: request.currentPage - 1 });
     setCheckList([]);
   };
 
@@ -47,17 +53,22 @@ const TableBottom = ({ data }) => {
   // limit 설정
   const choseLimit = (e) => {
     setOpen(!open);
-    setLimit(e.target.innerHTML);
-    setPage(1);
+    setRequest({
+      ...request,
+      limit: parseInt(e.target.innerHTML),
+      currentPage: 1,
+    });
     setCheckList([]);
   };
 
   const lastPage = () => {
-    setPage(data.page.totalPage);
+    // setPage(data.page.totalPage);
+    setRequest({ ...request, currentPage: data.page.totalPage });
     setCheckList([]);
   };
   const firstPage = () => {
-    setPage(1);
+    // setPage(1);
+    setRequest({ ...request, currentPage: 1 });
     setCheckList([]);
   };
 
@@ -67,8 +78,8 @@ const TableBottom = ({ data }) => {
     ));
   };
 
-  const { data: allContent } = useQuery(["contentList"], getContentsList);
-  console.log("allContent::", allContent);
+  const { data: allContent } = useQuery(["allContentList"], getContentsList);
+  // console.log("allContent::", allContent);
 
   const excelHeaders = [
     { label: "NO", key: "mailUid" },
@@ -95,23 +106,25 @@ const TableBottom = ({ data }) => {
       </div>
       <div className="page">
         <div className="page-btn-container">
-          <First onClick={firstPage} />
-          <Left onClick={minusPage} />
+          <FiChevronsLeft onClick={firstPage} />
+          <FiChevronLeft onClick={minusPage} />
           <span>페이지</span>
           <div className="current">{data?.page.currentPage}</div>
           <p>/ {data?.page.totalPage}</p>
-          <Right onClick={plusPage} />
-          <Last onClick={lastPage} />
+          <FiChevronRight onClick={plusPage} />
+          <FiChevronsRight onClick={lastPage} />
         </div>
         <div className="page-size" onClick={openSelect}>
-          <div className="page-size__select">{limit}</div>
-          <Down />
+          <div className="page-size__select">{request.limit}</div>
+          {/* <Down /> */}
+          {open ? <FiChevronUp /> : <FiChevronDown />}
           {open && <ul className="select-box">{renderSelectArray()}</ul>}
         </div>
       </div>
       <div className="page--meta">
         <span>
-          보기 - {limit}개 {data?.page.currentPage}/{data?.page.totalPage}
+          보기 - {request.limit}개 {data?.page.currentPage}/
+          {data?.page.totalPage}
         </span>
       </div>
     </S.TableBottomWrap>

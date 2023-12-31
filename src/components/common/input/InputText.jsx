@@ -1,9 +1,9 @@
 import * as S from "./InputText.style";
 
-const InputText = ({ type, id, name, placeholder, value, ...rest }) => {
+const InputText = ({ id, name, placeholder, value, ...rest }) => {
   return (
     <S.Input
-      type={type}
+      type="text"
       id={id}
       placeholder={placeholder}
       value={value}

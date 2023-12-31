@@ -6,6 +6,7 @@ import { purposeSelector } from "../../../../store/purposeAtome";
 import Loading from "../../../common/loading/Loading";
 
 const TableList = ({ data, error, isLoading, checkSingle }) => {
+  console.log(data);
   const purpose = useRecoilValue(purposeSelector);
   // console.log(data[1]);
   // 컨텐츠 렌더하는 함수
@@ -16,7 +17,9 @@ const TableList = ({ data, error, isLoading, checkSingle }) => {
     if (error) {
       return <p>Error : {error}</p>;
     }
-    if (data.length !== 0) {
+    if (data.articles.length === 0) {
+      return <p>검색결과가 없습니다.</p>;
+    } else {
       return data.articles?.map((content) => {
         return (
           <Content

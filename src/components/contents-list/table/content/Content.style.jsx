@@ -16,6 +16,7 @@ export const Content = styled.li`
 
   font-weight: 400;
   height: 30px;
+  /* cursor: pointer; */
   .detail {
     width: 100%;
     text-align: center;

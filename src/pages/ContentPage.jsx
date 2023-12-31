@@ -6,7 +6,7 @@ import { useRecoilValue } from "recoil";
 import { purposeSelector } from "../store/purposeAtome.js";
 const AdminPage = () => {
   const purpose = useRecoilValue(purposeSelector);
-  console.log(purpose);
+  console.log("purpose ::", purpose);
   return (
     <S.Page>
       <main>

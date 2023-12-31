@@ -3,18 +3,18 @@ import * as S from "./List.style";
 
 import Table from "./table/Table";
 import { useRecoilValue } from "recoil";
-import { limitSelector, pageSelector } from "../../store/request";
+import { requestSelector } from "../../store/request";
 import Header from "./../common/header/Header";
 import { useQuery } from "react-query";
 import { getContentsListOption } from "../../api/get";
 
 const List = () => {
-  const limit = useRecoilValue(limitSelector);
-  const currentPage = useRecoilValue(pageSelector);
+  const request = useRecoilValue(requestSelector);
+  console.log("request ::", request);
 
   const { data, isLoading, error } = useQuery(
-    ["contentList", { limit, currentPage }],
-    () => getContentsListOption({ limit, currentPage })
+    ["contentList", { request }],
+    () => getContentsListOption(request)
   );
 
   return (

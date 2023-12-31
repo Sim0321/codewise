@@ -3,7 +3,7 @@ import * as S from "./ModalPreview.style";
 import Editor from "../../../contents-config/form/editor/Editor";
 
 const ModalPreview = ({ data, editorValue }) => {
-  console.log(data);
+  // console.log(data);
   return (
     <S.ModalPreviewContainer>
       <S.FlexBox height="40px">

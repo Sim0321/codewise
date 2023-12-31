@@ -17,4 +17,12 @@ export const TableListWrap = styled.ul`
   &::-webkit-scrollbar-track {
     background: #cecece;
   }
+  p {
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    font-weight: 500;
+  }
 `;

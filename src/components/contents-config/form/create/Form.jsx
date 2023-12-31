@@ -215,7 +215,7 @@ const Form = () => {
         />
       </div>
       {modalOpen && (
-        <Modal setModalOpen={setModalOpen}>
+        <Modal setModalOpen={setModalOpen} roll="preview">
           <ModalPreview data={postBody} editorValue={editorValue} />
         </Modal>
       )}

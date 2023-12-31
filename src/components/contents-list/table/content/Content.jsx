@@ -6,10 +6,8 @@ import useEmail from "../../../../hooks/useEmail";
 import CheckBox from "../../../common/checkbox/CheckBox";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { checkListSelector } from "../../../../store/checkAtom";
-import {
-  purposeSelector,
-  readDetailSelector,
-} from "../../../../store/purposeAtome";
+import { purposeSelector } from "../../../../store/purposeAtome";
+import { readDetailSelector } from "../../../../store/contentDetailAtom";
 
 const Content = ({ content, checkSingle }) => {
   const setPurpose = useSetRecoilState(purposeSelector);
