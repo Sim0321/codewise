@@ -1,7 +1,8 @@
 import React from "react";
+import * as S from "./SelectItem.style";
 
 const SelectItem = ({ num, choseLimit }) => {
-  return <li onClick={choseLimit}>{num}</li>;
+  return <S.SelectItem onClick={choseLimit}>{num}</S.SelectItem>;
 };
 
 export default SelectItem;

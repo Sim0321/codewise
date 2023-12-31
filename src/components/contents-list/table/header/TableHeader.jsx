@@ -1,5 +1,5 @@
 import React from "react";
-import * as S from "../Table.style";
+import * as S from "./TableHeader.style";
 import { useRecoilValue } from "recoil";
 
 import { limitSelector } from "../../../../store/request";

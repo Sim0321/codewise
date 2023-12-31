@@ -63,12 +63,12 @@ class MockApi {
    * }
    * */
   async put({ mailUid, mailType, mailTitle, ismailIUse, mailContent, reason }) {
-    console.log("mailUid ::", mailUid);
-    console.log("mailType ::", mailType);
-    console.log("mailTitle ::", mailTitle);
-    console.log("ismailIUse ::", ismailIUse);
-    console.log("mailContent ::", mailContent);
-    console.log("reason ::", reason);
+    // console.log("mailUid ::", mailUid);
+    // console.log("mailType ::", mailType);
+    // console.log("mailTitle ::", mailTitle);
+    // console.log("ismailIUse ::", ismailIUse);
+    // console.log("mailContent ::", mailContent);
+    // console.log("reason ::", reason);
     const result = {
       data: null,
       status: null,

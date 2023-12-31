@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as S from "../Table.style";
+import * as S from "./TableBottom.style";
 
 import { ReactComponent as Download } from "../../../../assets/icon/download.svg";
 import { ReactComponent as Left } from "../../../../assets/icon/leftArrow.svg";

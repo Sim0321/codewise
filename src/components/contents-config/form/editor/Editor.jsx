@@ -3,7 +3,7 @@ import { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
-const Editor = ({ handleQuillChange, editorValue }) => {
+const Editor = ({ handleQuillChange, editorValue, readOnly }) => {
   // const ops = [
   //   { insert: "원격 접속 로그인 알림" },
   //   { attributes: { header: 1 }, insert: "\n" },
@@ -82,6 +82,7 @@ const Editor = ({ handleQuillChange, editorValue }) => {
       formats={formats}
       value={editorValue || ""}
       onChange={handleQuillChange}
+      readOnly={readOnly}
     />
   );
 };

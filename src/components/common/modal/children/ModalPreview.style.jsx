@@ -1,9 +1,7 @@
 import styled from "styled-components";
 import { theme } from "../../../../styles/theme";
 
-export const FormContainer = styled.form`
-  padding: 20px 30px 30px 20px;
-
+export const ModalPreviewContainer = styled.div`
   label {
     width: 120px;
     height: 100%;
@@ -18,22 +16,12 @@ export const FormContainer = styled.form`
   .email-item {
     display: flex;
     width: 100%;
-    border: 1px solid ${theme.border.gray};
+    /* border: 1px solid ${theme.border.gray}; */
   }
 
-  .input-wrapper {
+  .text-wrapper {
     background-color: ${theme.backGround.white};
     padding: 5px;
-    /* background-color: skyblue; */
-  }
-
-  .btn-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    width: 100%;
-    margin-top: 30px;
   }
 `;
 
@@ -45,41 +33,43 @@ export const FlexBox = styled.div`
   justify-content: end;
   padding: ${(p) => p.pd || "0px"};
   border: ${(p) => p.border || "none"};
+  .value {
+    width: 100%;
+    background-color: ${theme.backGround.configBgGray};
+    height: 100%;
+    padding: 0 10px;
+    border-radius: 5px;
+    border: 1px solid #ccd0e7;
+    display: flex;
+    align-items: center;
+  }
   .type {
     max-width: 730px;
-    .input-wrapper {
+    .text-wrapper {
       width: 610px;
+      display: flex;
+      align-items: center;
+      padding-left: 15px;
     }
   }
   .use {
     max-width: 365px;
 
-    .label-container {
+    .radio-container {
       width: 245px;
       display: flex;
       align-items: center;
       padding-left: 5px;
-      label {
-        display: inline-block;
-        width: auto;
-        height: auto;
+      span {
         padding: 5px 7px 5px 2px;
-        background-color: transparent;
-        border: none;
-        cursor: pointer;
         color: ${theme.color.black};
       }
-      input {
-        margin: 0 3px 0 6px;
-        cursor: pointer;
-        display: none;
-      }
+
       .circle {
         width: 12px;
         height: 12px;
         border: 1px solid ${theme.border.gray};
         border-radius: 50%;
-        cursor: pointer;
         margin: 0 3px 0 6px;
         display: flex;
         align-items: center;
@@ -95,14 +85,14 @@ export const FlexBox = styled.div`
   }
   .title {
     width: 100%;
-    .input-wrapper {
+    .text-wrapper {
       width: calc(100% - 120px);
     }
   }
 
   .reason {
     width: 100%;
-    .input-wrapper {
+    .text-wrapper {
       width: calc(100% - 120px);
     }
   }

@@ -1,15 +1,17 @@
 import React from "react";
-import * as S from "../Table.style";
+import * as S from "./TableList.style";
 import Content from "../content/Content";
-import { useSetRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { purposeSelector } from "../../../../store/purposeAtome";
+import Loading from "../../../common/loading/Loading";
 
 const TableList = ({ data, error, isLoading, checkSingle }) => {
+  const purpose = useRecoilValue(purposeSelector);
   // console.log(data[1]);
   // 컨텐츠 렌더하는 함수
   const renderContent = () => {
     if (isLoading) {
-      return <p>Loading</p>; // 스피너로 변환
+      return <Loading />; // 스피너로 변환
     }
     if (error) {
       return <p>Error : {error}</p>;
@@ -26,7 +28,7 @@ const TableList = ({ data, error, isLoading, checkSingle }) => {
       });
     }
   };
-  return <S.TableListWrap>{renderContent()}</S.TableListWrap>;
+  return <S.TableListWrap purpose={purpose}>{renderContent()}</S.TableListWrap>;
 };
 
 export default TableList;

@@ -2,15 +2,24 @@ import React from "react";
 import { ReactComponent as ListIcon } from "../../../assets/icon/list.svg";
 import { ReactComponent as Close } from "../../../assets/icon/close.svg";
 import * as S from "./Header.style";
+import { useSetRecoilState } from "recoil";
+import { purposeSelector } from "../../../store/purposeAtome";
 
 const Header = ({ desc }) => {
+  const setPurpose = useSetRecoilState(purposeSelector);
+
+  const clickSmall = () => {
+    setPurpose("default");
+  };
   return (
     <S.Header>
       <div className="title">
         {desc === "컨텐츠 목록" && <ListIcon />}
         <h3>{desc}</h3>
       </div>
-      <Close className="close" />
+      {desc === "컨텐츠 설정" && (
+        <Close className="close" onClick={clickSmall} />
+      )}
     </S.Header>
   );
 };

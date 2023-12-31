@@ -6,11 +6,16 @@ import Button from "../../../common/button/Button";
 import { Input } from "../../../common/input/InputText.style";
 import { useMutation, useQueryClient } from "react-query";
 import { createContent } from "../../../../api/post";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { purposeSelector } from "../../../../store/purposeAtome";
+import Modal from "../../../common/modal/Modal";
+import ModalPreview from "./../../../common/modal/children/ModalPreview";
 
 const Form = () => {
-  const [purpose, setPurpose] = useRecoilState(purposeSelector);
+  const setPurpose = useSetRecoilState(purposeSelector);
+
+  const [modalOpen, setModalOpen] = useState(false);
+
   // console.log("purpose ::", purpose);
 
   const [editorValue, setEditorValue] = useState(`<h1>원격 접속 로그인 알림</h1>
@@ -75,14 +80,24 @@ const Form = () => {
       const newPostBody = { ...postBody, mailContent: stringEditorValue };
 
       createPost(newPostBody);
+      // setPurpose("default");
     } else {
       alert("빈칸을 다 채워주세요"); // 유효성 검사
     }
   };
 
+  const clickClosePost = () => {
+    setPurpose("default");
+  };
+
+  const openModal = (e) => {
+    e.preventDefault();
+    setModalOpen(true);
+  };
+
   return (
     <S.FormContainer>
-      <S.FlexBox className="label-flex" height="40px">
+      <S.FlexBox height="40px">
         <div className="type email-item">
           <label htmlFor="type">메일 유형</label>
           <div className="input-wrapper">
@@ -125,7 +140,7 @@ const Form = () => {
         </div>
       </S.FlexBox>
 
-      <S.FlexBox className="label-flex" height="40px">
+      <S.FlexBox height="40px">
         <div className="title email-item">
           <label htmlFor="title">메일 발송제목</label>
           <div className="input-wrapper">
@@ -154,7 +169,7 @@ const Form = () => {
         </div>
       </S.FlexBox>
 
-      <S.FlexBox className="label-flex" height="40px">
+      <S.FlexBox height="40px">
         <div className="reason email-item">
           <label htmlFor="reason">변경사유</label>
           <div className="input-wrapper">
@@ -180,11 +195,17 @@ const Form = () => {
           bg="#fff"
           border="1px solid #B2B6C9"
           svg={true}
+          onClick={openModal}
         />
       </S.FlexBox>
 
       <div className="btn-container">
-        <Button desc="창닫기" size="big" border="1px solid #B2B6C9" />
+        <Button
+          desc="창닫기"
+          size="big"
+          border="1px solid #B2B6C9"
+          onClick={clickClosePost}
+        />
         <Button
           desc="저장"
           size="big"
@@ -193,6 +214,11 @@ const Form = () => {
           onClick={clickSubmit}
         />
       </div>
+      {modalOpen && (
+        <Modal setModalOpen={setModalOpen}>
+          <ModalPreview data={postBody} editorValue={editorValue} />
+        </Modal>
+      )}
     </S.FormContainer>
   );
 };

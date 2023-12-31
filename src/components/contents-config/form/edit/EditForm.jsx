@@ -4,12 +4,21 @@ import * as S from "./EditForm.style";
 import Button from "../../../common/button/Button";
 import { Input } from "../../../common/input/InputText.style";
 import { useMutation, useQueryClient } from "react-query";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { editContent } from "./../../../../api/put";
-import { readDetailSelector } from "../../../../store/purposeAtome";
+import {
+  purposeSelector,
+  readDetailSelector,
+} from "../../../../store/purposeAtome";
+import Modal from "../../../common/modal/Modal";
+import ModalPreview from "../../../common/modal/children/ModalPreview";
 
 const EditForm = () => {
   const [contentData, setContentData] = useRecoilState(readDetailSelector);
+
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const setPurpose = useSetRecoilState(purposeSelector);
 
   const [editorValue, setEditorValue] = useState("");
 
@@ -63,9 +72,19 @@ const EditForm = () => {
       const newPostBody = { ...contentData, mailContent: stringEditorValue };
 
       editPost(newPostBody);
+      // setPurpose("default");
     } else {
       alert("빈칸을 다 채워주세요"); // 유효성 검사
     }
+  };
+
+  const clickClosePost = () => {
+    setPurpose("default");
+  };
+
+  const openModal = (e) => {
+    e.preventDefault();
+    setModalOpen(true);
   };
 
   return (
@@ -168,19 +187,31 @@ const EditForm = () => {
           bg="#fff"
           border="1px solid #B2B6C9"
           svg={true}
+          onClick={openModal}
         />
       </S.FlexBox>
 
       <div className="btn-container">
-        <Button desc="창닫기" size="big" border="1px solid #B2B6C9" />
         <Button
-          desc="저장"
+          desc="창닫기"
+          size="big"
+          border="1px solid #B2B6C9"
+          onClick={clickClosePost}
+        />
+        <Button
+          desc="수정"
           size="big"
           bg="#191919"
           color="#fff"
           onClick={clickSubmit}
         />
       </div>
+
+      {modalOpen && (
+        <Modal setModalOpen={setModalOpen}>
+          <ModalPreview data={contentData} editorValue={editorValue} />
+        </Modal>
+      )}
     </S.EditFormContainer>
   );
 };
