@@ -13,6 +13,11 @@ export const TableBottomWrap = styled.div`
     display: flex;
     align-items: center;
     cursor: pointer;
+    a {
+      display: flex;
+      text-decoration: none;
+      color: ${theme.color.black};
+    }
   }
   .page {
     display: flex;

@@ -17,8 +17,6 @@ class MockApi {
    * }
    * */
   async delete(mailUidList = [] || 0) {
-    console.log("여기 잘 됨?");
-    console.log("mailUidList ::", mailUidList);
     const result = {
       data: null,
       status: null,
@@ -63,12 +61,6 @@ class MockApi {
    * }
    * */
   async put({ mailUid, mailType, mailTitle, ismailIUse, mailContent, reason }) {
-    // console.log("mailUid ::", mailUid);
-    // console.log("mailType ::", mailType);
-    // console.log("mailTitle ::", mailTitle);
-    // console.log("ismailIUse ::", ismailIUse);
-    // console.log("mailContent ::", mailContent);
-    // console.log("reason ::", reason);
     const result = {
       data: null,
       status: null,
@@ -142,8 +134,7 @@ class MockApi {
     };
 
     const tempPageDto = {
-      // limit: limit || this.#db.articles.length,
-      limit: limit || 10, //기본 값 10개로 수정
+      limit: limit || this.#db.articles.length,
       currentPage: currentPage || 1,
     };
 

@@ -11,9 +11,12 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import { limitSelector, pageSelector } from "../../../../store/request";
 import SelectItem from "./SelectItem";
 import { checkListSelector } from "../../../../store/checkAtom";
-import { useQueryClient } from "react-query";
+import { CSVLink } from "react-csv";
+import { useQuery } from "react-query";
+import { getContentsList } from "../../../../api/get";
 
 const TableBottom = ({ data }) => {
+  console.log(data);
   const [page, setPage] = useRecoilState(pageSelector);
   const [limit, setLimit] = useRecoilState(limitSelector);
 
@@ -23,21 +26,17 @@ const TableBottom = ({ data }) => {
 
   const selectArray = [1, 5, 10, 20];
 
-  const queryClient = useQueryClient();
-
   //
   // page+1
   const plusPage = () => {
     setPage(page + 1);
     setCheckList([]);
     console.log("눌림");
-    // queryClient.invalidateQueries("contentList");
   };
   // page-1
   const minusPage = () => {
     setPage(page - 1);
     setCheckList([]);
-    // queryClient.invalidateQueries("contentList");
   };
 
   // selector open
@@ -51,19 +50,15 @@ const TableBottom = ({ data }) => {
     setLimit(e.target.innerHTML);
     setPage(1);
     setCheckList([]);
-
-    // queryClient.invalidateQueries("contentList");
   };
 
   const lastPage = () => {
     setPage(data.page.totalPage);
     setCheckList([]);
-    // queryClient.invalidateQueries("contentList");
   };
   const firstPage = () => {
     setPage(1);
     setCheckList([]);
-    // queryClient.invalidateQueries("contentList");
   };
 
   const renderSelectArray = () => {
@@ -71,11 +66,32 @@ const TableBottom = ({ data }) => {
       <SelectItem key={index} num={num} choseLimit={choseLimit} />
     ));
   };
+
+  const { data: allContent } = useQuery(["contentList"], getContentsList);
+  console.log("allContent::", allContent);
+
+  const excelHeaders = [
+    { label: "NO", key: "mailUid" },
+    { label: "메일 유형", key: "mailType" },
+    { label: "메일 발송 제목", key: "mailTitle" },
+    { label: "메일 사용여부", key: "ismailIUse" },
+    { label: "수정일", key: "modificationDate" },
+  ];
   return (
     <S.TableBottomWrap>
       <div className="excel">
-        <Download />
-        엑셀저장
+        {allContent && (
+          <CSVLink
+            data={allContent.articles}
+            headers={excelHeaders}
+            filename="컨텐츠목록.csv"
+            className="hidden"
+            target="_blank"
+          >
+            <Download />
+            엑셀저장
+          </CSVLink>
+        )}
       </div>
       <div className="page">
         <div className="page-btn-container">
@@ -94,7 +110,9 @@ const TableBottom = ({ data }) => {
         </div>
       </div>
       <div className="page--meta">
-        <span>보기 1 - 10/17</span>
+        <span>
+          보기 - {limit}개 {data?.page.currentPage}/{data?.page.totalPage}
+        </span>
       </div>
     </S.TableBottomWrap>
   );

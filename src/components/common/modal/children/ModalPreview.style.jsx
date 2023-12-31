@@ -16,7 +16,6 @@ export const ModalPreviewContainer = styled.div`
   .email-item {
     display: flex;
     width: 100%;
-    /* border: 1px solid ${theme.border.gray}; */
   }
 
   .text-wrapper {
