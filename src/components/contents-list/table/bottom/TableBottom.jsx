@@ -109,8 +109,11 @@ const TableBottom = ({ data }) => {
           <FiChevronsLeft onClick={firstPage} />
           <FiChevronLeft onClick={minusPage} />
           <span>페이지</span>
-          <div className="current">{data?.page.currentPage}</div>
+          <div className="current">
+            {data?.page.totalPage === 0 ? "0" : request.currentPage}
+          </div>
           <p>/ {data?.page.totalPage}</p>
+
           <FiChevronRight onClick={plusPage} />
           <FiChevronsRight onClick={lastPage} />
         </div>

@@ -22,7 +22,7 @@ const EditForm = () => {
 
   const queryClient = useQueryClient();
 
-  // 등록한 것 라이브러리 사용한 것과, 아닌것 비교하기
+  // 등록한 것과 라이브러리 사용한것 비교하기
   useEffect(() => {
     const checkContent = contentData?.mailContent.split('"')[0] === "{";
     if (checkContent) {
@@ -38,7 +38,6 @@ const EditForm = () => {
 
   const onChangeInput = (e) => {
     const { name, value } = e.target;
-    // console.log(value);
     setContentData({ ...contentData, [name]: value });
   };
 
@@ -70,7 +69,7 @@ const EditForm = () => {
       const newPostBody = { ...contentData, mailContent: stringEditorValue };
 
       editPost(newPostBody);
-      // setPurpose("default");
+      setPurpose("default");
     } else {
       alert("빈칸을 다 채워주세요"); // 유효성 검사
     }
@@ -191,7 +190,7 @@ const EditForm = () => {
 
       <div className="btn-container">
         <Button
-          desc="창닫기"
+          desc="취소"
           size="big"
           border="1px solid #B2B6C9"
           onClick={clickClosePost}

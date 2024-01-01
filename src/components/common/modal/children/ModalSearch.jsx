@@ -4,14 +4,9 @@ import InputText from "./../../input/InputText";
 import { useSetRecoilState } from "recoil";
 import { requestSelector } from "../../../../store/request";
 import Button from "../../button/Button";
-import { searchStatusSelector } from "../../../../store/searchStatusAtom";
 
 const ModalSearch = ({ setmodalopen }) => {
-  // const [request, setRequest] = useRecoilState(requestSelector);
-
   const setRequest = useSetRecoilState(requestSelector);
-
-  // const setSearchStatus = useSetRecoilState(searchStatusSelector);
 
   const [data, setData] = useState({
     mailType: "",
@@ -20,8 +15,6 @@ const ModalSearch = ({ setmodalopen }) => {
     limit: 10,
     currentPage: 1,
   });
-
-  // console.log("ModalSearch ::", request);
 
   const handleRadio = (e) => {
     setData({ ...data, ismailIUse: e.target.id });
@@ -33,10 +26,8 @@ const ModalSearch = ({ setmodalopen }) => {
   };
 
   const submitSearch = () => {
-    // console.log("눌림");
     setRequest(data);
     setmodalopen(false);
-    // setSearchStatus(false);
   };
 
   return (
@@ -88,6 +79,7 @@ const ModalSearch = ({ setmodalopen }) => {
       {/* 유효성 검사 추가 */}
 
       <div className="btn-container">
+        <em>gddg</em>
         <Button
           desc="검색"
           size="long"

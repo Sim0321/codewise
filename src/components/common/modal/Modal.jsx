@@ -5,8 +5,9 @@ import { useSetRecoilState } from "recoil";
 import { searchStatusSelector } from "../../../store/searchStatusAtom";
 
 const Modal = ({ children, setModalOpen, bg, roll, setmodalopen }) => {
-  // console.log(roll);
   const setSearchStatus = useSetRecoilState(searchStatusSelector);
+
+  // 모달 닫기
   const closeModal = () => {
     setModalOpen(false);
     setSearchStatus(false);

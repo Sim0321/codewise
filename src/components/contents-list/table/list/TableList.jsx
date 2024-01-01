@@ -18,7 +18,7 @@ const TableList = ({ data, error, isLoading, checkSingle }) => {
       return <p>Error : {error}</p>;
     }
     if (data.articles.length === 0) {
-      return <p>검색결과가 없습니다.</p>;
+      return <p>검색결과가 없거나 컨텐츠가 없습니다.</p>;
     } else {
       return data.articles?.map((content) => {
         return (

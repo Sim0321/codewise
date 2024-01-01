@@ -28,7 +28,7 @@ const Content = ({ content, checkSingle }) => {
 
   return (
     <S.Content
-      onClick={readContent}
+      onClickCapture={readContent}
       checked={checkList.includes(content.mailUid)}
     >
       <CheckBox
