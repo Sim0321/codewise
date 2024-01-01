@@ -11,9 +11,20 @@ import Modal from "../../../common/modal/Modal";
 import ModalPreview from "./../../../common/modal/children/ModalPreview";
 
 const Form = () => {
+  const queryClient = useQueryClient();
+
   const setPurpose = useSetRecoilState(purposeSelector);
 
   const [modalOpen, setModalOpen] = useState(false);
+
+  const [postBody, setPostBody] = useState({
+    mailType: "",
+    mailTitle: "",
+    ismailIUse: "Y",
+    reason: "",
+  });
+
+  const [validate, setValidate] = useState({});
 
   const [editorValue, setEditorValue] = useState(`<h1>원격 접속 로그인 알림</h1>
   <p><span style="font-size: 14px;"><span style="background-color: rgb(149, 165, 166); color: rgb(255, 255, 255);">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;제목&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span>&nbsp; &nbsp; {{site_name}} 소명 요청 안내</span></p>
@@ -23,34 +34,8 @@ const Form = () => {
   <p><span style="font-size: 14px;"><span style="color: rgb(0, 0, 0);"><span style="color: rgb(255, 255, 255); background-color: rgb(149, 165, 166);">&nbsp; &nbsp; &nbsp;탐지 시각&nbsp; &nbsp; &nbsp;</span>&nbsp; &nbsp; {{detect_run_time}}</span></span></p>
   `);
 
-  const queryClient = useQueryClient();
-
-  const handleQuillChange = (content, delta, source, editor) => {
-    setEditorValue(editor.getContents());
-  };
-
-  const [postBody, setPostBody] = useState({
-    mailType: "",
-    mailTitle: "",
-    ismailIUse: "Y",
-    reason: "",
-  });
-
-  const onChangeInput = (e) => {
-    const { name, value } = e.target;
-    setPostBody({ ...postBody, [name]: value });
-  };
-
-  const handleRadio = (e) => {
-    setPostBody({ ...postBody, ismailIUse: e.target.id });
-  };
-
-  const clickRedCircle = (status) => {
-    setPostBody({ ...postBody, ismailIUse: status });
-  };
-
   const { mutate: createPost } = useMutation(createContent, {
-    onSuccess: (res) => {
+    onSuccess: () => {
       setPostBody({
         mailType: "",
         mailTitle: "",
@@ -62,23 +47,53 @@ const Form = () => {
     },
   });
 
+  const handleQuillChange = (content, delta, source, editor) => {
+    setEditorValue(editor.getContents());
+  };
+
+  const onChangeInput = (e) => {
+    const { name, value } = e.target;
+    setPostBody({ ...postBody, [name]: value });
+  };
+
+  const handleRadio = (e) => {
+    setPostBody({ ...postBody, ismailIUse: e.target.id });
+  };
+
+  /** custom radio 누르면 바뀌는 함수 */
+  const clickRedCircle = (status) => {
+    setPostBody({ ...postBody, ismailIUse: status });
+  };
+
+  /** 유효성 검사하는 함수 */
+  const checkValidate = () => {
+    let msg = {};
+
+    if (postBody.mailType === "") {
+      msg.mailType = "메일 타입을 입력해주세요.";
+    }
+    if (postBody.mailTitle === "") {
+      msg.mailTitle = "메일 제목을 입력해주세요.";
+    }
+    if (postBody.reason === "") {
+      msg.reason = "변경 사유를 입력해주세요.";
+    }
+    return msg;
+  };
+
+  /** 등록 */
   const clickSubmit = (e) => {
     e.preventDefault();
-    // 없을 때 예외처리
-    if (
-      postBody.mailType &&
-      postBody.mailTitle &&
-      editorValue &&
-      postBody.reason
-    ) {
+    const validateMsg = checkValidate();
+    const validateMsgArray = Object.keys(validateMsg);
+    // 유효성 검사
+    if (validateMsgArray.length === 0) {
       const stringEditorValue = JSON.stringify(editorValue);
-
       const newPostBody = { ...postBody, mailContent: stringEditorValue };
 
       createPost(newPostBody);
-      // setPurpose("default");
     } else {
-      alert("빈칸을 다 채워주세요"); // 유효성 검사
+      setValidate(validateMsg);
     }
   };
 
@@ -135,6 +150,7 @@ const Form = () => {
           </div>
         </div>
       </S.FlexBox>
+      {validate.mailType && <div className="validate">{validate.mailType}</div>}
 
       <S.FlexBox height="40px">
         <div className="title email-item">
@@ -154,6 +170,9 @@ const Form = () => {
           </div>
         </div>
       </S.FlexBox>
+      {validate.mailTitle && (
+        <div className="validate">{validate.mailTitle}</div>
+      )}
 
       <S.FlexBox className="editor-flex" height="350px">
         <div className="desc email-item">
@@ -183,6 +202,7 @@ const Form = () => {
           </div>
         </div>
       </S.FlexBox>
+      {validate.reason && <div className="validate">{validate.reason}</div>}
 
       <S.FlexBox height="40px" bg="#F2F4F7" pd="6px 5px">
         <Button

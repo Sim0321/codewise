@@ -8,13 +8,13 @@ const Modal = ({ children, setModalOpen, bg, roll, setmodalopen }) => {
   const modalContainerRef = useRef();
   const setSearchStatus = useSetRecoilState(searchStatusSelector);
 
-  // 모달 닫기
+  /** 모달 닫는 함수 */
   const closeModal = () => {
     setModalOpen(false);
     setSearchStatus(false);
   };
 
-  // 배경 누르면 모달 닫히기
+  /** 배경 누르면 모달 닫히는 함수 */
   const handleContainerClick = (e) => {
     if (e.target === modalContainerRef.current) {
       closeModal();

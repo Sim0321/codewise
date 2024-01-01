@@ -2,15 +2,15 @@ import React from "react";
 import * as S from "./TableHeader.style";
 import { useRecoilValue } from "recoil";
 
-import { limitSelector, requestSelector } from "../../../../store/request";
+import { requestSelector } from "../../../../store/request";
 import { checkListSelector } from "../../../../store/checkAtom";
 import CheckBox from "../../../common/checkbox/CheckBox";
 
 const TableHeader = ({ checkAll }) => {
-  // const limit = useRecoilValue(limitSelector);
   const checkList = useRecoilValue(checkListSelector);
 
   const request = useRecoilValue(requestSelector);
+
   return (
     <S.TableHeaderWrap>
       <CheckBox

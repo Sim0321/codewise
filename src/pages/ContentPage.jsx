@@ -10,7 +10,6 @@ const AdminPage = () => {
     <S.Page>
       <main>
         <List />
-
         {purpose !== "default" && <Config />}
       </main>
     </S.Page>

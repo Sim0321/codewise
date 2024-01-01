@@ -8,9 +8,11 @@ import { purposeSelector } from "../../../store/purposeAtome";
 const Header = ({ desc }) => {
   const setPurpose = useSetRecoilState(purposeSelector);
 
+  /** size 최소화 시키는 함수 */
   const clickSmall = () => {
     setPurpose("default");
   };
+
   return (
     <S.Header>
       <div className="title">

@@ -149,7 +149,6 @@ class MockApi {
       tempPageDto.totalPage = Math.ceil(tempDB.length / limit);
       tempDB = tempDB.slice(endIndex - limit, endIndex);
 
-      // console.log("최종 :::", tempDB);
       const tempResult = {
         articles: tempDB,
         page: tempPageDto,

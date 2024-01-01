@@ -19,12 +19,12 @@ export const FormContainer = styled.form`
     display: flex;
     width: 100%;
     border: 1px solid ${theme.border.gray};
+    position: relative;
   }
 
   .input-wrapper {
     background-color: ${theme.backGround.white};
     padding: 5px;
-    /* background-color: skyblue; */
   }
 
   .btn-container {
@@ -34,6 +34,12 @@ export const FormContainer = styled.form`
     gap: 10px;
     width: 100%;
     margin-top: 30px;
+  }
+
+  .validate {
+    font-size: 11px;
+    margin: 2px 0 5px 5px;
+    color: red;
   }
 `;
 
@@ -45,6 +51,7 @@ export const FlexBox = styled.div`
   justify-content: end;
   padding: ${(p) => p.pd || "0px"};
   border: ${(p) => p.border || "none"};
+
   .type {
     max-width: 730px;
     .input-wrapper {

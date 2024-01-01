@@ -1,3 +1,4 @@
+/** 수정일 Date Format 훅 */
 const useDateFormat = (date) => {
   if (!date) {
     return null;
@@ -12,5 +13,3 @@ const useDateFormat = (date) => {
 };
 
 export default useDateFormat;
-
-// 수정일 Date Format 훅

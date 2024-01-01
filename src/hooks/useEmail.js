@@ -1,3 +1,4 @@
+/** Y,N을 사용,미사용으로 반환하는 훅 */
 const useEmail = (boolean) => {
   if (!boolean) {
     return null;
@@ -11,4 +12,3 @@ const useEmail = (boolean) => {
 };
 
 export default useEmail;
-// Y,N을 사용,미사용으로 반환하는 훅

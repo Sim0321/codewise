@@ -19,24 +19,21 @@ const Top = ({ total }) => {
 
   const [request, setRequest] = useRecoilState(requestSelector);
 
-  // console.log("searchStatus::", searchStatus);
-
   const checkList = useRecoilValue(checkListSelector);
 
+  /** 등록함수 */
   const clickCreate = () => {
     setPurpose("create");
   };
 
   const { mutate: deletePost } = useMutation(deleteContent, {
-    onSuccess: (res) => {
-      console.log("성공");
+    onSuccess: () => {
       queryClient.invalidateQueries("contentList");
     },
   });
 
+  /** 삭제 함수 */
   const clickDelete = () => {
-    // console.log("삭제");
-    console.log(checkList);
     if (checkList.length !== 0) {
       deletePost(checkList);
     } else {
@@ -49,6 +46,7 @@ const Top = ({ total }) => {
     setSearchStatus(true);
   };
 
+  /** 검색 초기화 함수 */
   const resetFilter = () => {
     setRequest({
       mailType: "",

@@ -2,10 +2,10 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import { requestSelector } from "../store/request";
 import { checkListSelector } from "../store/checkAtom";
 
+/** 페이징 관련 비즈니스 로직을 분리한 함수 */
 const usePagination = (data) => {
-  console.log("커스텀 훅:", data);
-  const setCheckList = useSetRecoilState(checkListSelector);
   const [request, setRequest] = useRecoilState(requestSelector);
+  const setCheckList = useSetRecoilState(checkListSelector);
 
   // page+1
   const plusPage = () => {
