@@ -13,6 +13,5 @@ export const Input = styled.input`
   color: ${(p) => p.color || `${theme.color.black}`};
   &::placeholder {
     color: ${(p) => p.color || `${theme.color.gray}`};
-    /* color: red; */
   }
 `;

@@ -6,6 +6,14 @@
 이 페이지는 조회, 등록, 수정, 삭제 등의 기능을 제공해야 합니다.
 ```
 
+## 배포
+
+[배포 사이트](codewise-ten.vercel.app)
+
+## 트러블 슈팅
+
+[터러블 슈팅](https://velog.io/@scw0604/codewise-%EA%B3%BC%EC%A0%9C)
+
 ## 메일템플릿 디자인 페이지
 
 - https://www.figma.com/file/b3Nnix8GO4sDmWvpJYLna9/%40-%EC%9E%85%EC%82%AC%ED%85%8C%EC%8A%A4%ED%8A%B8%EC%9A%A9?node-id=0%3A1&mode=dev
@@ -105,7 +113,7 @@
         data: [Type] BoardDtoList,
         status [Type] Number
     }
-```dd
+```
 
 **문제와 디자인에 대한 저작권은 코드와이즈에 있습니다.**<br/>
 **유출하실 경우 채용과정에서 불이익이 있을 수 있습니다.**<br/>
