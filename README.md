@@ -2,6 +2,7 @@
 
 ## 배포🚀
 [결과물 배포](codewise-ten.vercel.app)
+배포 링크 https://codewise-ten.vercel.app/
 
 ## 조건
 - 필수 조건
