@@ -12,7 +12,7 @@
 
 ## 트러블 슈팅
 
-[터러블 슈팅](https://velog.io/@scw0604/codewise-%EA%B3%BC%EC%A0%9C)
+[트러블 슈팅](https://velog.io/@scw0604/codewise-%EA%B3%BC%EC%A0%9C)
 
 ## 메일템플릿 디자인 페이지
 
