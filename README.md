@@ -44,7 +44,7 @@
 
 ### 페이징이슈
 
-- **원인 : ** MockApi의 `get`에서 `mailType`, `mailTitle`, `ismailIUse`는 `filter()`로 response가 잘 나왔지만, `limit`, `currentPage`에 대한 처리가 따로 없어 페이징을 구현하지 못하는 이슈
+- **원인 :** MockApi의 `get`에서 `mailType`, `mailTitle`, `ismailIUse`는 `filter()`로 response가 잘 나왔지만, `limit`, `currentPage`에 대한 처리가 따로 없어 페이징을 구현하지 못하는 이슈
 - **해결 :** `tempPageDto`에서 `limit`과 `currentPage` 값을 추출하고, `limit * currentPage`를 계산하여 현재 페이지의 `endIndex`를 찾음. 그 후, `tempDB`에서 해당 페이지의 아이템을 `slice` 메서드를 이용해 추출하고, 전체 아이템 수를 한 페이지에 보여줄 아이템 수로 나누어 `totalPage`를 계산. 이때, `Math.ceil` 메서드를 사용하여 소수점을 고려하여 올림한 후, 클라이언트 측에서는 페이지네이션을 위한 limit 값을 1, 5, 10, 20 등으로 제한함으로써 페이징 구현.
 
 ### 체크 이슈
