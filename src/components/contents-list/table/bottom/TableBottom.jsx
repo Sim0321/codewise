@@ -19,12 +19,15 @@ import {
   FiChevronsRight,
 } from "react-icons/fi";
 import usePagination from "../../../../hooks/usePagination";
+import { purposeSelector } from "../../../../store/purposeAtome";
 
 const TableBottom = ({ data }) => {
   const [request, setRequest] = useRecoilState(requestSelector);
   const [open, setOpen] = useState(false);
 
   const setCheckList = useSetRecoilState(checkListSelector);
+
+  const setPurpose = useSetRecoilState(purposeSelector);
 
   const selectArray = [1, 5, 10, 20];
 
@@ -52,6 +55,7 @@ const TableBottom = ({ data }) => {
       currentPage: 1,
     });
     setCheckList([]);
+    setPurpose("default");
   };
 
   /** selector 옵션들 렌더해주는 함수 */

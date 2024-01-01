@@ -36,6 +36,7 @@ const Top = ({ total }) => {
   const clickDelete = () => {
     if (checkList.length !== 0) {
       deletePost(checkList);
+      setPurpose("default");
     } else {
       alert("하나 이상 체크해주세요.");
     }
