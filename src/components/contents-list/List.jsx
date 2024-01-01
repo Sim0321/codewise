@@ -1,24 +1,26 @@
 import React from "react";
 import * as S from "./List.style";
 
-import Header from "./header/Header";
 import Table from "./table/Table";
+import { useRecoilValue } from "recoil";
+import { requestSelector } from "../../store/request";
+import Header from "./../common/header/Header";
+import { useQuery } from "react-query";
+import { getContentsListOption } from "../../api/get";
 
 const List = () => {
-  // const [limitValue, setLimitValue] = useRecoilState(limitAtom);
-  // console.log(limitValue);
+  const request = useRecoilValue(requestSelector);
+  console.log("request ::", request);
 
-  // const { data, error, isLoading } = useApi("GET", {
-  //   limit: 20,
-  //   // mailType: "Notification",
-  //   // mailTitle: "New Feature Announcement",
-  //   currentPage: 1,
-  //   // 예외처리 추가
-  // });
+  const { data, isLoading, error } = useQuery(
+    ["contentList", { request }],
+    () => getContentsListOption(request)
+  );
+
   return (
     <S.ListContainer>
-      <Header />
-      <Table />
+      <Header desc="컨텐츠 목록" />
+      <Table data={data} error={error} isLoading={isLoading} />
     </S.ListContainer>
   );
 };

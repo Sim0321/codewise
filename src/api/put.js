@@ -1,6 +1,8 @@
 import MockApi from "../utils/mockApi";
 
-export const editContent = async (data) => {
-  const response = await MockApi.put(data);
-  return response;
+const mockApi = new MockApi();
+
+export const editContent = async (request) => {
+  const { data } = await mockApi.put(request);
+  return data;
 };

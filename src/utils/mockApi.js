@@ -16,7 +16,7 @@ class MockApi {
    * status [Type] Number
    * }
    * */
-  async delete({ mailUidList = [] || 0 }) {
+  async delete(mailUidList = [] || 0) {
     const result = {
       data: null,
       status: null,
@@ -84,7 +84,7 @@ class MockApi {
         mailTitle: mailTitle || this.#db.articles[dtoIndex].mailTitle,
         ismailIUse: ismailIUse || this.#db.articles[dtoIndex].ismailIUse,
         mailContent: mailContent || this.#db.articles[dtoIndex].mailContent,
-        modificationDate: this.#getLocalDate,
+        modificationDate: this.#getLocalDate(),
         reason: reason,
       };
 
@@ -96,6 +96,8 @@ class MockApi {
       this.#setResultFail(result);
       return result;
     }
+
+    console.log(result);
 
     return result;
   }
@@ -132,8 +134,7 @@ class MockApi {
     };
 
     const tempPageDto = {
-      // limit: limit || this.#db.articles.length,
-      limit: limit || 10, //기본 값 10개로 수정
+      limit: limit || this.#db.articles.length,
       currentPage: currentPage || 1,
     };
 
@@ -146,12 +147,13 @@ class MockApi {
       const endIndex = limit * currentPage;
 
       tempPageDto.totalPage = Math.ceil(tempDB.length / limit);
-      tempDB = tempDB.slice(0, endIndex);
+      tempDB = tempDB.slice(endIndex - limit, endIndex);
 
       // console.log("최종 :::", tempDB);
       const tempResult = {
         articles: tempDB,
         page: tempPageDto,
+        totalEl: this.#db.articles.length,
       };
 
       this.#setResultSuccess(result, tempResult);
@@ -167,7 +169,7 @@ class MockApi {
    * 생성 api
    * @param mailType 'Inserted Type' [Type] String
    * @param mailTitle 'Inserted Title' [Type] String
-   * @param ismailIUse 'Y' || 'N' [Type] String
+   * @param ismailUse 'Y' || 'N' [Type] String
    * @param mailContent 'Inserted Content' [Type] String
    * @param reason 'Inserted Reason' [Type] String
    * @return data {
@@ -176,6 +178,12 @@ class MockApi {
    * }
    * */
   async post({ mailType, mailTitle, ismailIUse, mailContent, reason }) {
+    // console.log("찍혀>>>");
+    // console.log("mailType::", mailType);
+    // console.log("mailTitle::", mailTitle);
+    // console.log("ismailUse::", ismailUse);
+    // console.log("mailContent::", mailContent);
+    // console.log("reason::", reason);
     const result = {
       data: null,
       status: null,
@@ -188,7 +196,7 @@ class MockApi {
       mailTitle: mailTitle,
       ismailIUse: ismailIUse,
       mailContent: mailContent,
-      modificationDate: this.#getLocalDate,
+      modificationDate: this.#getLocalDate(),
       reason: reason,
     };
 
@@ -224,20 +232,30 @@ class MockApi {
     const minutes = currentDate.getMinutes();
     const seconds = currentDate.getSeconds();
 
-    return `${year}-${
-      month < 10 ? "0" + month : month
-    }-${day}T${hours}:${minutes}:${seconds}Z`;
-    // }-${day}T${hours}:${minutes}Z`;
+    // return `${year}-${
+    //   month < 10 ? "0" + month : month
+    // }-${day}T${hours}:${minutes}:${seconds}Z`;
+    return `${year}-${month < 10 ? "0" + month : month}-${
+      day < 10 ? "0" + day : day
+    }T${hours < 10 ? "0" + hours : hours}:${
+      minutes < 10 ? "0" + minutes : minutes
+    }:${seconds < 10 ? "0" + seconds : seconds}Z`;
   }
 
   #checkObjectValue(object, compereValue) {
+    console.log("checkObjectValue 함수");
+    console.log("object ::", object);
+    console.log("compereValue::", compereValue);
     const keys = Object.keys(object);
+    console.log("keys:;", keys);
     let checkData = true;
     keys.forEach((key) => {
       if (!compereValue[key].includes(object[key])) {
         checkData = false;
       }
     });
+
+    console.log("checkData::", checkData);
     return checkData;
   }
 

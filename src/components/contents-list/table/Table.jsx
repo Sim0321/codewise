@@ -4,26 +4,12 @@ import * as S from "./Table.style";
 import TableHeader from "./header/TableHeader";
 import TableList from "./list/TableList";
 import TableBottom from "./bottom/TableBottom";
-import useApi from "../../../hooks/useApi";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { checkListSelector } from "../../../store/checkAtom";
+import Top from "./top/Top";
 
-import { limitSelector, pageSelector } from "../../../store/request.js";
-
-const Table = () => {
-  // const [parentData, setParentData] = useState([]);
-  const limit = useRecoilValue(limitSelector);
-  const page = useRecoilValue(pageSelector);
-  const { data, error, isLoading } = useApi("GET", {
-    limit,
-    page, // 이 부분 수정해야함sdfsdffsd
-  });
-  console.log("data ::", data);
-
-  console.log(limit, page);
-
+const Table = ({ data, error, isLoading }) => {
   const [checkList, setCheckList] = useRecoilState(checkListSelector);
-  // console.log(checkList);
 
   // 체크박스 개별 선택/해제
   const checkSingle = (checked, id) => {
@@ -46,6 +32,7 @@ const Table = () => {
   };
   return (
     <S.Table>
+      <Top total={data?.totalEl} />
       <TableHeader checkAll={checkAll} />
       <TableList
         data={data}

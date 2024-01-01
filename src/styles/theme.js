@@ -5,6 +5,7 @@ export const theme = {
     white: "#ffffff",
     black: "#191919",
     blue: "#5E8EC7",
+    gray: "CCD0E7",
   },
   border: {
     gray: "#CCD0E7",
@@ -31,5 +32,6 @@ export const theme = {
     total: "#ddebff",
     top: "#2e3e76",
     bottom: "#D9DAE3",
+    configBgGray: "#F2F4F7",
   },
 };
