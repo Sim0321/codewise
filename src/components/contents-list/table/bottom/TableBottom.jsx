@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import * as S from "./TableBottom.style";
 
 import { ReactComponent as Download } from "../../../../assets/icon/download.svg";
-import { ReactComponent as Down } from "../../../../assets/icon/downArrow.svg";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { requestSelector } from "../../../../store/request";
 import SelectItem from "./SelectItem";
@@ -19,12 +18,9 @@ import {
   FiChevronsLeft,
   FiChevronsRight,
 } from "react-icons/fi";
+import usePagination from "../../../../hooks/usePagination";
 
 const TableBottom = ({ data }) => {
-  // console.log(data);
-  // const [page, setPage] = useRecoilState(pageSelector);
-  // const [limit, setLimit] = useRecoilState(limitSelector);
-
   const [request, setRequest] = useRecoilState(requestSelector);
 
   const setCheckList = useSetRecoilState(checkListSelector);
@@ -33,17 +29,7 @@ const TableBottom = ({ data }) => {
 
   const selectArray = [1, 5, 10, 20];
 
-  //
-  // page+1
-  const plusPage = () => {
-    setRequest({ ...request, currentPage: request.currentPage + 1 });
-    setCheckList([]);
-  };
-  // page-1
-  const minusPage = () => {
-    setRequest({ ...request, currentPage: request.currentPage - 1 });
-    setCheckList([]);
-  };
+  const { plusPage, minusPage, lastPage, firstPage } = usePagination(data);
 
   // selector open
   const openSelect = () => {
@@ -61,24 +47,17 @@ const TableBottom = ({ data }) => {
     setCheckList([]);
   };
 
-  const lastPage = () => {
-    // setPage(data.page.totalPage);
-    setRequest({ ...request, currentPage: data.page.totalPage });
-    setCheckList([]);
-  };
-  const firstPage = () => {
-    // setPage(1);
-    setRequest({ ...request, currentPage: 1 });
-    setCheckList([]);
-  };
-
+  //
   const renderSelectArray = () => {
     return selectArray.map((num, index) => (
       <SelectItem key={index} num={num} choseLimit={choseLimit} />
     ));
   };
 
-  const { data: allContent } = useQuery(["allContentList"], getContentsList);
+  const { data: allContent } = useQuery(
+    ["allContentList", { data }],
+    getContentsList
+  );
   // console.log("allContent::", allContent);
 
   const excelHeaders = [

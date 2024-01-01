@@ -79,7 +79,6 @@ const ModalSearch = ({ setmodalopen }) => {
       {/* 유효성 검사 추가 */}
 
       <div className="btn-container">
-        <em>gddg</em>
         <Button
           desc="검색"
           size="long"

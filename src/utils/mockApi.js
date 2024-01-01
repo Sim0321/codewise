@@ -243,11 +243,7 @@ class MockApi {
   }
 
   #checkObjectValue(object, compereValue) {
-    console.log("checkObjectValue 함수");
-    console.log("object ::", object);
-    console.log("compereValue::", compereValue);
     const keys = Object.keys(object);
-    console.log("keys:;", keys);
     let checkData = true;
     keys.forEach((key) => {
       if (!compereValue[key].includes(object[key])) {
@@ -255,7 +251,6 @@ class MockApi {
       }
     });
 
-    console.log("checkData::", checkData);
     return checkData;
   }
 
