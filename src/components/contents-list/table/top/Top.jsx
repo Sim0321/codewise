@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Button from "./../../../common/button/Button";
 import * as S from "./Top.style";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { purposeSelector } from "../../../../store/purposeAtome";
 import { useMutation, useQueryClient } from "react-query";
 import { deleteContent } from "../../../../api/delete";
@@ -19,7 +19,7 @@ const Top = ({ total }) => {
 
   const [request, setRequest] = useRecoilState(requestSelector);
 
-  const checkList = useRecoilValue(checkListSelector);
+  const [checkList, setCheckList] = useRecoilState(checkListSelector);
 
   /** 등록함수 */
   const clickCreate = () => {
@@ -37,6 +37,7 @@ const Top = ({ total }) => {
     if (checkList.length !== 0) {
       deletePost(checkList);
       setPurpose("default");
+      setCheckList([]);
     } else {
       alert("하나 이상 체크해주세요.");
     }
