@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Button from "./../../../common/button/Button";
 import * as S from "./Top.style";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { purposeSelector } from "../../../../store/purposeAtome";
 import { useMutation, useQueryClient } from "react-query";
 import { deleteContent } from "../../../../api/delete";
