@@ -25,9 +25,14 @@ const ModalSearch = ({ setmodalopen }) => {
     setData({ ...data, [name]: value });
   };
 
+  /** 검색 */
   const submitSearch = () => {
-    setRequest(data);
-    setmodalopen(false);
+    if (!data.mailType && !data.mailTitle && !data.ismailIUse) {
+      alert("최소 하나는 있어야해요");
+    } else {
+      setRequest(data);
+      setmodalopen(false);
+    }
   };
 
   return (
@@ -76,10 +81,8 @@ const ModalSearch = ({ setmodalopen }) => {
         </div>
       </div>
       <span>* 최소 하나 이상은 입력해주세요.</span>
-      {/* 유효성 검사 추가 */}
 
       <div className="btn-container">
-        <em>gddg</em>
         <Button
           desc="검색"
           size="long"

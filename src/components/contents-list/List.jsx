@@ -10,7 +10,6 @@ import { getContentsListOption } from "../../api/get";
 
 const List = () => {
   const request = useRecoilValue(requestSelector);
-  console.log("request ::", request);
 
   const { data, isLoading, error } = useQuery(
     ["contentList", { request }],

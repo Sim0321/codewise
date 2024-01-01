@@ -149,7 +149,6 @@ class MockApi {
       tempPageDto.totalPage = Math.ceil(tempDB.length / limit);
       tempDB = tempDB.slice(endIndex - limit, endIndex);
 
-      // console.log("최종 :::", tempDB);
       const tempResult = {
         articles: tempDB,
         page: tempPageDto,
@@ -243,11 +242,7 @@ class MockApi {
   }
 
   #checkObjectValue(object, compereValue) {
-    console.log("checkObjectValue 함수");
-    console.log("object ::", object);
-    console.log("compereValue::", compereValue);
     const keys = Object.keys(object);
-    console.log("keys:;", keys);
     let checkData = true;
     keys.forEach((key) => {
       if (!compereValue[key].includes(object[key])) {
@@ -255,7 +250,6 @@ class MockApi {
       }
     });
 
-    console.log("checkData::", checkData);
     return checkData;
   }
 

@@ -11,7 +11,7 @@ import Top from "./top/Top";
 const Table = ({ data, error, isLoading }) => {
   const [checkList, setCheckList] = useRecoilState(checkListSelector);
 
-  // 체크박스 개별 선택/해제
+  /** 체크박스 개별 선택/해제 */
   const checkSingle = (checked, id) => {
     if (checked) {
       setCheckList([...checkList, id]);
@@ -20,7 +20,7 @@ const Table = ({ data, error, isLoading }) => {
     }
   };
 
-  // 체크박스 전체 선택/해제
+  /** 체크박스 전체 선택/해제 */
   const checkAll = (checked) => {
     if (checked) {
       const maeilUidArry = [];

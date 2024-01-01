@@ -35,6 +35,12 @@ export const EditFormContainer = styled.form`
     width: 100%;
     margin-top: 30px;
   }
+
+  .validate {
+    font-size: 13px;
+    margin: 2px 0 5px 5px;
+    color: red;
+  }
 `;
 
 export const FlexBox = styled.div`

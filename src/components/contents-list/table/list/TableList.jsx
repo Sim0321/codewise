@@ -6,13 +6,12 @@ import { purposeSelector } from "../../../../store/purposeAtome";
 import Loading from "../../../common/loading/Loading";
 
 const TableList = ({ data, error, isLoading, checkSingle }) => {
-  console.log(data);
   const purpose = useRecoilValue(purposeSelector);
-  // console.log(data[1]);
-  // 컨텐츠 렌더하는 함수
+
+  /** 컨텐츠 렌더하는 함수 */
   const renderContent = () => {
     if (isLoading) {
-      return <Loading />; // 스피너로 변환
+      return <Loading />;
     }
     if (error) {
       return <p>Error : {error}</p>;

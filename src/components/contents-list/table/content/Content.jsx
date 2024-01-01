@@ -12,19 +12,16 @@ import { readDetailSelector } from "../../../../store/contentDetailAtom";
 const Content = ({ content, checkSingle }) => {
   const setPurpose = useSetRecoilState(purposeSelector);
   const setData = useSetRecoilState(readDetailSelector);
-  const readContent = () => {
-    // e.stopPropagation();
-    console.log("li 눌림");
-    setPurpose("read");
-    setData(content);
-  };
 
-  // const changeCheck = (checked) => {
-  //   checkSingle(checked, content.mailUid);
-  // };
   const format = useDateFormat(content.modificationDate);
 
   const checkList = useRecoilValue(checkListSelector);
+
+  /** 컨텐트 누르면 데이터들은 상태관리 하는 함수 */
+  const readContent = () => {
+    setPurpose("read");
+    setData(content);
+  };
 
   return (
     <S.Content
@@ -34,7 +31,6 @@ const Content = ({ content, checkSingle }) => {
       <CheckBox
         checked={checkList.includes(content.mailUid)}
         onChange={(checked) => checkSingle(checked, content.mailUid)}
-        // onChange={changeCheck}
       />
       <div className="table-number detail">{content.mailUid}</div>
       <div className="table-type detail ">{content.mailType}</div>

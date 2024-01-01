@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import * as S from "./TableBottom.style";
 
 import { ReactComponent as Download } from "../../../../assets/icon/download.svg";
-import { ReactComponent as Down } from "../../../../assets/icon/downArrow.svg";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { requestSelector } from "../../../../store/request";
 import SelectItem from "./SelectItem";
@@ -19,38 +18,32 @@ import {
   FiChevronsLeft,
   FiChevronsRight,
 } from "react-icons/fi";
+import usePagination from "../../../../hooks/usePagination";
 
 const TableBottom = ({ data }) => {
-  // console.log(data);
-  // const [page, setPage] = useRecoilState(pageSelector);
-  // const [limit, setLimit] = useRecoilState(limitSelector);
-
   const [request, setRequest] = useRecoilState(requestSelector);
+  const [open, setOpen] = useState(false);
 
   const setCheckList = useSetRecoilState(checkListSelector);
 
-  const [open, setOpen] = useState(false);
-
   const selectArray = [1, 5, 10, 20];
 
-  //
-  // page+1
-  const plusPage = () => {
-    setRequest({ ...request, currentPage: request.currentPage + 1 });
-    setCheckList([]);
-  };
-  // page-1
-  const minusPage = () => {
-    setRequest({ ...request, currentPage: request.currentPage - 1 });
-    setCheckList([]);
-  };
+  const { plusPage, minusPage, lastPage, firstPage } = usePagination(data);
 
-  // selector open
+  const excelHeaders = [
+    { label: "NO", key: "mailUid" },
+    { label: "메일 유형", key: "mailType" },
+    { label: "메일 발송 제목", key: "mailTitle" },
+    { label: "메일 사용여부", key: "ismailIUse" },
+    { label: "수정일", key: "modificationDate" },
+  ];
+
+  /** selector toggle 함수 */
   const openSelect = () => {
     setOpen(!open);
   };
 
-  // limit 설정
+  /** limit 설정 함수 */
   const choseLimit = (e) => {
     setOpen(!open);
     setRequest({
@@ -61,33 +54,18 @@ const TableBottom = ({ data }) => {
     setCheckList([]);
   };
 
-  const lastPage = () => {
-    // setPage(data.page.totalPage);
-    setRequest({ ...request, currentPage: data.page.totalPage });
-    setCheckList([]);
-  };
-  const firstPage = () => {
-    // setPage(1);
-    setRequest({ ...request, currentPage: 1 });
-    setCheckList([]);
-  };
-
+  /** selector 옵션들 렌더해주는 함수 */
   const renderSelectArray = () => {
     return selectArray.map((num, index) => (
       <SelectItem key={index} num={num} choseLimit={choseLimit} />
     ));
   };
 
-  const { data: allContent } = useQuery(["allContentList"], getContentsList);
-  // console.log("allContent::", allContent);
+  const { data: allContent } = useQuery(
+    ["allContentList", { data }],
+    getContentsList
+  );
 
-  const excelHeaders = [
-    { label: "NO", key: "mailUid" },
-    { label: "메일 유형", key: "mailType" },
-    { label: "메일 발송 제목", key: "mailTitle" },
-    { label: "메일 사용여부", key: "ismailIUse" },
-    { label: "수정일", key: "modificationDate" },
-  ];
   return (
     <S.TableBottomWrap>
       <div className="excel">
@@ -108,6 +86,7 @@ const TableBottom = ({ data }) => {
         <div className="page-btn-container">
           <FiChevronsLeft onClick={firstPage} />
           <FiChevronLeft onClick={minusPage} />
+
           <span>페이지</span>
           <div className="current">
             {data?.page.totalPage === 0 ? "0" : request.currentPage}
@@ -119,7 +98,6 @@ const TableBottom = ({ data }) => {
         </div>
         <div className="page-size" onClick={openSelect}>
           <div className="page-size__select">{request.limit}</div>
-          {/* <Down /> */}
           {open ? <FiChevronUp /> : <FiChevronDown />}
           {open && <ul className="select-box">{renderSelectArray()}</ul>}
         </div>

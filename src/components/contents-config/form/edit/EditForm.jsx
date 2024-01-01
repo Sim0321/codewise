@@ -12,15 +12,22 @@ import ModalPreview from "../../../common/modal/children/ModalPreview";
 import { readDetailSelector } from "../../../../store/contentDetailAtom";
 
 const EditForm = () => {
-  const [contentData, setContentData] = useRecoilState(readDetailSelector);
-
-  const [modalOpen, setModalOpen] = useState(false);
+  const queryClient = useQueryClient();
 
   const setPurpose = useSetRecoilState(purposeSelector);
 
+  const [contentData, setContentData] = useRecoilState(readDetailSelector);
+  const [modalOpen, setModalOpen] = useState(false);
+
   const [editorValue, setEditorValue] = useState("");
 
-  const queryClient = useQueryClient();
+  const [validate, setValidate] = useState({});
+
+  const { mutate: editPost } = useMutation(editContent, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("contentList");
+    },
+  });
 
   // 등록한 것과 라이브러리 사용한것 비교하기
   useEffect(() => {
@@ -45,25 +52,33 @@ const EditForm = () => {
     setContentData({ ...contentData, ismailIUse: e.target.id });
   };
 
+  /** custom radio 누르면 바뀌는 함수 */
   const clickRedCircle = (status) => {
     setContentData({ ...contentData, ismailIUse: status });
   };
 
-  const { mutate: editPost } = useMutation(editContent, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("contentList");
-    },
-  });
+  /** 유효성 검사하는 함수 */
+  const checkValidate = () => {
+    let msg = {};
 
+    if (contentData.mailType === "") {
+      msg.mailType = "메일 타입을 입력해주세요.";
+    }
+    if (contentData.mailTitle === "") {
+      msg.mailTitle = "메일 제목을 입력해주세요.";
+    }
+    if (contentData.reason === "") {
+      msg.reason = "변경 사유를 입력해주세요.";
+    }
+    return msg;
+  };
+
+  /** 수정 */
   const clickSubmit = (e) => {
     e.preventDefault();
-    // 없을 때 예외처리
-    if (
-      contentData.mailType &&
-      contentData.mailTitle &&
-      editorValue &&
-      contentData.reason
-    ) {
+    const validateMsg = checkValidate();
+    const validateMsgArray = Object.keys(validateMsg);
+    if (validateMsgArray.length === 0) {
       const stringEditorValue = JSON.stringify(editorValue);
 
       const newPostBody = { ...contentData, mailContent: stringEditorValue };
@@ -71,7 +86,7 @@ const EditForm = () => {
       editPost(newPostBody);
       setPurpose("default");
     } else {
-      alert("빈칸을 다 채워주세요"); // 유효성 검사
+      setValidate(validateMsg);
     }
   };
 
@@ -128,6 +143,7 @@ const EditForm = () => {
           </div>
         </div>
       </S.FlexBox>
+      {validate.mailType && <div className="validate">{validate.mailType}</div>}
 
       <S.FlexBox height="40px">
         <div className="title email-item">
@@ -147,6 +163,9 @@ const EditForm = () => {
           </div>
         </div>
       </S.FlexBox>
+      {validate.mailTitle && (
+        <div className="validate">{validate.mailTitle}</div>
+      )}
 
       <S.FlexBox height="350px">
         <div className="desc email-item">
@@ -176,6 +195,7 @@ const EditForm = () => {
           </div>
         </div>
       </S.FlexBox>
+      {validate.reason && <div className="validate">{validate.reason}</div>}
 
       <S.FlexBox height="40px" bg="#F2F4F7" pd="6px 5px">
         <Button
